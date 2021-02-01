@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "882209613707",
+    "project_id": "covid-19-vac-project",
+    "storage_bucket": "covid-19-vac-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882209613707:android:420b9ec3718a047cfbf18e",
+        "android_client_info": {
+          "package_name": "com.example.covid_vaccine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882209613707-3rd4mp4onoa1vm50meo3i0frg0u9kp7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS4BOCP3XQjcH0Ut7m0QDGICuLkiafsSQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882209613707-3rd4mp4onoa1vm50meo3i0frg0u9kp7j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
