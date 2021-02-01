@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
+import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+/*import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';*/
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());//MyApp()
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter login UI',
+      /*title: 'Flutter login UI',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -21,13 +22,13 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.green,
-      ),
-      home: MyHomePage(title: 'Flutter Login'),
+      ),*/
+      home: Wrapper(),
     );
   }
 }
 
-class OTPPage extends StatefulWidget {
+/*class OTPPage extends StatefulWidget {
   final String title;
   OTPPage({Key key, this.title}) : super(key: key);
 
@@ -213,4 +214,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
+}*/
