@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: MyHomePage(title: "home page",),
+      child: MyHomePage(
+        title: "home page",
+      ),
     );
   }
 }
@@ -82,29 +85,26 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 150.0,
-                          child: Image.asset(
-                            "assets/logo.png",
-                            fit: BoxFit.contain,
-                          ),
+                  color: const Color(0xFFF6F6F6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 150.0,
+                        child: Image.asset(
+                          "assets/logo.png",
+                          fit: BoxFit.contain,
                         ),
-                        SizedBox(height: 45.0),
-                        emailField,
-                        SizedBox(height: 25.0),
-                        nextButton,
-                        SizedBox(
-                          height: 15.0,
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 45.0),
+                      emailField,
+                      SizedBox(height: 25.0),
+                      nextButton,
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                    ],
                   ),
                 ),
               ],

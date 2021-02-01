@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
-import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+import 'package:flutter/material.dart'
+    show BuildContext, MaterialApp, StatelessWidget, ThemeData, Widget, runApp;
 /*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';*/
 
-void main() => runApp(MyApp());//MyApp()
+void main() => runApp(MyApp()); //MyApp()
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -23,6 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),*/
+      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
       home: Wrapper(),
     );
   }
