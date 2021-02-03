@@ -1,3 +1,4 @@
+import 'package:covid_vaccine/screens/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final nextButton = Container(
+    final listItem = Container(
         width: 375,
         height: 150,
         alignment: Alignment.center,
@@ -110,11 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OTPPage()),
+                MaterialPageRoute(builder: (context) => RegistrationPage()),
               );
             },
-            child: Center(child:
-              Container(
+            child: Center(
+              child: Container(
                   child: Text("+",
                       //textAlign: TextAlign.start,
                       style: style.copyWith(
@@ -129,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: List<Widget>.generate(
           2,
           (index) => Column(
-                children: [nextButton, SizedBox(height: 20)],
+                children: [listItem, SizedBox(height: 20)],
               )),
     );
     // Scaffold is a layout for the major Material Components.
