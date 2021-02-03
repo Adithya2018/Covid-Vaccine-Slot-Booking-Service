@@ -19,7 +19,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: LoginPage(
-        title: "home page",
+        title: "Login page",
       ),
     );
   }
