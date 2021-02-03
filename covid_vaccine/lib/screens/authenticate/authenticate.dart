@@ -1,3 +1,4 @@
+import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatelessWidget {
@@ -10,7 +11,6 @@ class Authenticate extends StatelessWidget {
     );
   }
 }
-
 
 class OTPPage extends StatefulWidget {
   final String title;
@@ -38,7 +38,7 @@ class _OTPPageState extends State<OTPPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OTPPage()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             },
             child: Text("Verify",
@@ -67,7 +67,7 @@ class _OTPPageState extends State<OTPPage> {
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Column(
-                //width: 800,
+                  //width: 800,
                   children: <Widget>[
                     SizedBox(height: 180.0),
                     TextField(
@@ -75,7 +75,7 @@ class _OTPPageState extends State<OTPPage> {
                       style: style,
                       decoration: InputDecoration(
                           contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                           labelText: "Enter OTP",
                           //hintText: "OTP",
                           border: OutlineInputBorder(
