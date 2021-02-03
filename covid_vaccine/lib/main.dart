@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
+import 'package:flutter/material.dart' show BuildContext, MaterialApp, StatelessWidget, Widget, runApp;
+/*import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';*/
 
-
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());//MyApp()
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter login UI',
+      /*title: 'Flutter login UI',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -22,8 +22,88 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.green,
+      ),*/
+      home: Wrapper(),
+    );
+  }
+}
+
+/*class OTPPage extends StatefulWidget {
+  final String title;
+  OTPPage({Key key, this.title}) : super(key: key);
+
+  @override
+  _OTPPageState createState() => _OTPPageState();
+}
+
+class _OTPPageState extends State<OTPPage> {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+  @override
+  Widget build(BuildContext context) {
+    final validateButton = Container(
+        width: 200,
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Color(0xff138808),
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            //onPressed: () {}, // here we need to add the functionality
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OTPPage()),
+              );
+            },
+            child: Text("Verify",
+                textAlign: TextAlign.center,
+                style: style.copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ));
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+      /*appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text("OTP Page"),
+      ),*/
+      body: Center(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Column(
+                  //width: 800,
+                  children: <Widget>[
+                    SizedBox(height: 180.0),
+                    TextField(
+                      obscureText: true,
+                      style: style,
+                      decoration: InputDecoration(
+                          contentPadding:
+                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                          labelText: "Enter OTP",
+                          //hintText: "OTP",
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(32.0))),
+                    ),
+                    SizedBox(height: 25.0),
+                    validateButton
+                  ]),
+            ),
+          ), // This trailing comma makes auto-formatting nicer for build methods.
+        ),
       ),
-      home: MyHomePage(title: 'Flutter Login'),
     );
   }
 }
@@ -48,7 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final emailField = Container(
         width: 800,
         child: TextField(
@@ -56,26 +135,25 @@ class _MyHomePageState extends State<MyHomePage> {
           style: style,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              hintText: "Mobile No/Email",
-              border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-        )
-    );
+              labelText: "Mobile No/Email",
+              //hintText: "Mobile No/Email",
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0))),
+        ));
 
     final passwordField = Container(
-      width: 800,
-      child: TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "OTP",
-          border:
-          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    )
-    );
-    final loginButton = Container(
         width: 800,
+        child: TextField(
+          obscureText: true,
+          style: style,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              hintText: "OTP",
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0))),
+        ));
+    final nextButton = Container(
+        width: 200,
         child: Material(
           elevation: 5.0,
           borderRadius: BorderRadius.circular(30.0),
@@ -83,59 +161,57 @@ class _MyHomePageState extends State<MyHomePage> {
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            onPressed: () {}, // here we need to add the functionality
-            child: Text("Login",
+            //onPressed: () {}, // here we need to add the functionality
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OTPPage()),
+              );
+            },
+            child: Text("Next",
                 textAlign: TextAlign.center,
                 style: style.copyWith(
                     color: Colors.white, fontWeight: FontWeight.bold)),
           ),
-        )
-    );
+        ));
 
     return Scaffold(
       body: Center(
         child: Scrollbar(
-        child: SingleChildScrollView(
-        child: Column(
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(36.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 150.0,
-                    child: Image.asset(
-                      "assets/logo.png",
-                      fit: BoxFit.contain,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 150.0,
+                          child: Image.asset(
+                            "assets/logo.png",
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        SizedBox(height: 45.0),
+                        emailField,
+                        SizedBox(height: 25.0),
+                        nextButton,
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 45.0),
-                  emailField,
-                  SizedBox(
-                      height: 25.0
-                  ),
-                  passwordField,
-                  SizedBox(
-                    height: 35.0,
-                  ),
-                  loginButton,
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
         ),
-        ),
-      ),
       ),
     );
   }
-}
-
+}*/
