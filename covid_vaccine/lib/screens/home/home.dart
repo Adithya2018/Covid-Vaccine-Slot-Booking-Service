@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
     final buttonList = Column(
       children: List<Widget>.generate(
-          0,
+          2,
           (index) => Column(
                 children: [listItem, SizedBox(height: 20)],
               )),
