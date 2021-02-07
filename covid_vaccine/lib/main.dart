@@ -1,9 +1,12 @@
 import 'dart:ui';
 import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
+import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart'
     show BuildContext, MaterialApp, StatelessWidget, ThemeData, Widget, runApp;
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
 /*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';*/
 
@@ -41,17 +44,19 @@ class MyApp extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-            theme:
-                new ThemeData(scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
-            home: Wrapper(),
-          );
+          return StreamProvider.value(
+              value: AuthService().user,
+              child: MaterialApp(
+                theme: new ThemeData(
+                    scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
+                home: Wrapper(),
+              ));
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
         return MaterialApp(
             home: Container(
-          child: Text("the app is loading"),
+          child: Text("Loading..."),
         ));
       },
     );

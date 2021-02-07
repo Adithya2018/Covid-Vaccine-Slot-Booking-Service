@@ -1,3 +1,4 @@
+import 'package:covid_vaccine/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 /*
@@ -6,23 +7,33 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  UserData userFromDB(User userX) {
+    return (userX == null) ? null : UserData(uid: userX.uid);
+  }
+
+  // determine whether user is signed in or signed out
+  Stream<UserData> get user {
+    return _auth.authStateChanges().map(userFromDB);
+  }
+
   // anonymous sign-in
   Future signInAnon() async {
-    User user;
     try {
       UserCredential result = await _auth.signInAnonymously();
-      user = result.user;
+      return userFromDB(result.user);
     } catch (e) {
       print(e.toString());
       return null;
     }
-    return user;
   }
+
 
   // email and password sign-in
 
   // register with email and password
 
   // sign out
-
+  Future signOut() async {
+    _auth.signOut();
+  }
 }

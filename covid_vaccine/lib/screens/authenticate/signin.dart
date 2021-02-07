@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:covid_vaccine/models/user.dart';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class _LogInState extends State<LogIn> {
     );
   }
 }*/
-
 class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,14 +45,10 @@ class _SignInOptionsState extends State<SignInOptions> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () async {
-          User userX = await _auth.signInAnon();
+          UserData userX = await _auth.signInAnon();
           print(userX == null
               ? 'sign in was not successful'
-              : 'signed in successfully');
-          while (true) {
-            print(userX);
-            sleep(Duration(milliseconds: 10));
-          }
+              : 'signed in anonymously: $userX.uid');
           /*Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Login()),
@@ -64,6 +60,26 @@ class _SignInOptionsState extends State<SignInOptions> {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     ));
+
+    final signOutAnonButton = Container(
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Colors.green[700],
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            //onPressed: () {}, // here we need to add the functionality
+            onPressed: () async {
+              UserData userX = await _auth.signOut();
+              print("signed out $userX");
+            },
+            child: Text("Sign out",
+                textAlign: TextAlign.center,
+                style: style.copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ));
 
     //sign-in with email/mobile no. button
     final signInOthButton = Container(
@@ -108,6 +124,7 @@ class _SignInOptionsState extends State<SignInOptions> {
                         SizedBox(height: 45.0),
                         signInAnonButton,
                         SizedBox(height: 25.0),
+                        signOutAnonButton
                       ],
                     ),
                   ),

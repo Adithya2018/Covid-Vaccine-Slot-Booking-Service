@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black,offset: Offset(1,3))]// make rounded corner of border
         ),
         child: Material(
-          elevation: 5.0,
+          elevation: 2.0,
           borderRadius: BorderRadius.circular(10.0),
           //color: Colors.blue,
           child: MaterialButton(
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
     final buttonList = Column(
       children: List<Widget>.generate(
-          2,
+          5,
           (index) => Column(
                 children: [listItem, SizedBox(height: 20)],
               )),
@@ -136,6 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
       appBar: AppBar(
+        //elevation: 1.0,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.menu),
@@ -174,6 +175,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 buttonList,
                 addBtn,
+                SizedBox(
+                  height: 20,
+                ),
               ])),
         ),
       ),
