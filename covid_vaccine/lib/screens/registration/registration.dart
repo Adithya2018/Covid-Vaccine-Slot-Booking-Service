@@ -69,6 +69,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   borderRadius: BorderRadius.circular(10.0))),
         ));
 
+    // TODO: Aadhaar no. verification after entering it
     final aadhaarField = Container(
         width: 800,
         child: TextField(
