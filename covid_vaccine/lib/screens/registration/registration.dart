@@ -94,10 +94,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.push(
-            context,
+          Navigator.pop(context);
+            /*context,
             MaterialPageRoute(builder: (context) => Home()),
-          );
+          );*/
         },
         child: Text("Cancel",
             textAlign: TextAlign.center,
@@ -116,9 +116,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Slotbooking()),
+          // changed to pop since we don't wish to store the context and just
+          // need to go to the most recent screen
+          Navigator.of(context).pushNamed(
+            //context,
+            //MaterialPageRoute(builder: (context) => Slotbooking()),
+            '/sb',
           );
         },
         child: Text("Next",

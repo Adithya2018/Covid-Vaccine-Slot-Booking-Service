@@ -5,11 +5,14 @@ import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return MyHomePage(
+      title: "home page",
+    );
+    /*Container(
       child: MyHomePage(
         title: "home page",
       ),
-    );
+    );*/
   }
 }
 
@@ -109,10 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
             //padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40.0)),
             onPressed: () {
-              Navigator.push(
+              Navigator.of(context).pushNamed('/reg');
+              /*push(
                 context,
                 MaterialPageRoute(builder: (context) => RegistrationPage()),
-              );
+              );*/
             },
             child: Center(
               child: Container(
