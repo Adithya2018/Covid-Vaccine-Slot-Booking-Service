@@ -35,6 +35,7 @@ dependencies:
   firebase_core: ^0.7.0
   table_calendar: ^2.3.3
   provider: ^4.3.3
+  syncfusion_flutter_calendar: ^18.4.41
   # extras
 
 dev_dependencies:

@@ -14,6 +14,6 @@ class Wrapper extends StatelessWidget {
     // return home or authenticate widget depending on the authentication state
     // i.e. whether the user has signed in or signed out
     print(user);
-    return SignInOptions();
+    return Login();
   }
 }

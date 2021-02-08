@@ -1,5 +1,6 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:covid_vaccine/screens/home/home.dart';
+import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 
@@ -93,7 +94,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Home()),
+          );
         },
         child: Text("Cancel",
             textAlign: TextAlign.center,
@@ -112,7 +116,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Slotbooking()),
+          );
         },
         child: Text("Next",
             textAlign: TextAlign.center,
@@ -122,31 +129,39 @@ class _RegistrationPageState extends State<RegistrationPage> {
     ));
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        // leading: IconButton(
-        //   icon: Icon(Icons.menu),
-        //   tooltip: 'Navigation menu',
-        //   onPressed: null,
-        // ),
-
-        iconTheme: IconThemeData(
-          color: Colors.black, //change your color here
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: null,
+          ),
+          title: Text('Registration',
+              style: style.copyWith(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Refresh',
+              onPressed: null,
+            ),
+          ],
         ),
-
-        title: Text('Beneficiary Information Entry',
-            style: style.copyWith(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              //fontSize: 40.0,
-            )),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(Icons.refresh),
-        //     tooltip: 'Refresh',
-        //     onPressed: null,
-        //   ),
-        // ],
       ),
       // body is the majority of the screen.
       body: Scrollbar(
@@ -154,94 +169,96 @@ class _RegistrationPageState extends State<RegistrationPage> {
           /*child: Padding(
             padding: const EdgeInsets.all(1.0),*/
           child: Center(
-              /*width: 300,
+            /*width: 300,
               padding: const EdgeInsets.all(36.0),*/
-              child: Container(
-                  width: 365,
-                  child: Column(
-                      /*verticalDirection: VerticalDirection.down,
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                    child: Column(
+                        /*verticalDirection: VerticalDirection.down,
                 crossAxisAlignment: CrossAxisAlignment.center,*/
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 20,
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // CircularProfileAvatar(
+                      //   '"assets/profile.png"',
+                      //   borderColor: Colors.black12,
+                      //   backgroundColor: Colors.transparent,
+                      //   borderWidth: 1,
+                      //   elevation: 2,
+                      //   radius: 50,
+                      // ),
+                      SizedBox(
+                        height: 150.0,
+                        child: Image.asset(
+                          "assets/profile.png",
+                          fit: BoxFit.contain,
+                          color: Colors.blue[600],
                         ),
-                        // CircularProfileAvatar(
-                        //   '"assets/profile.png"',
-                        //   borderColor: Colors.black12,
-                        //   backgroundColor: Colors.transparent,
-                        //   borderWidth: 1,
-                        //   elevation: 2,
-                        //   radius: 50,
-                        // ),
-                        SizedBox(
-                          height: 150.0,
-                          child: Image.asset(
-                            "assets/profile.png",
-                            fit: BoxFit.contain,
-                            color: Colors.blue[600],
-                          ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // TODO: implement the redirect to camera app button
+                      // Icon(Icons.camera, size: 40.0),
+                      SizedBox(
+                        height: 25.0,
+                        child: Image.asset(
+                          "assets/camera.png",
+                          fit: BoxFit.contain,
                         ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        // TODO: implement the redirect to camera app button
-                        // Icon(Icons.camera, size: 40.0),
-                        SizedBox(
-                          height: 25.0,
-                          child: Image.asset(
-                            "assets/camera.png",
-                            fit: BoxFit.contain,
-                          ),
-                        ),
+                      ),
 
-                        SizedBox(
-                          height: 40,
-                        ),
-                        nameField,
-                        SizedBox(
-                          height: 40,
-                        ),
-                        dobField,
-                        SizedBox(
-                          height: 40,
-                        ),
-                        aadhaarField,
-                        SizedBox(
-                          height: 40,
-                        ),
-                        Center(
-                          child: Row(
-                            children: [
-                              new Flexible(
-                                child: Container(
-                                    child: cancelButton,
-                                    alignment: Alignment.centerLeft),
-                                flex: 2,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      nameField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      dobField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      aadhaarField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Center(
+                        child: Row(
+                          children: [
+                            new Flexible(
+                              child: Container(
+                                  child: cancelButton,
+                                  alignment: Alignment.centerLeft),
+                              flex: 2,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                alignment: Alignment.center,
                               ),
-                              new Flexible(
-                                child: Container(
-                                  alignment: Alignment.center,
-                                ),
-                                flex: 1,
-                              ),
-                              new Flexible(
-                                child: Container(
-                                    child: nextButton,
-                                    alignment: Alignment.centerRight),
-                                flex: 2,
-                              )
-                              //Spacer(),
-                              // nextButton,
-                              // Spacer(
-                              //   flex: 1,
-                              // ),
-                              // cancelButton,
-                              // Spacer(),
-                            ],
-                          ),
+                              flex: 1,
+                            ),
+                            new Flexible(
+                              child: Container(
+                                  child: nextButton,
+                                  alignment: Alignment.centerRight),
+                              flex: 2,
+                            )
+                            //Spacer(),
+                            // nextButton,
+                            // Spacer(
+                            //   flex: 1,
+                            // ),
+                            // cancelButton,
+                            // Spacer(),
+                          ],
                         ),
-                      ]))),
+                      ),
+                    ]))),
+          ),
         ),
       ),
     );
