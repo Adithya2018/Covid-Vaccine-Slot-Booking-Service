@@ -34,12 +34,9 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.pop(
-            context,
-            //MaterialPageRoute(builder: (context) => Registration()),
-          );
+          //Navigator.of(context).pop();
+          Navigator.popUntil(context, ModalRoute.withName('/home'));
         },
         child: Text("Cancel",
             textAlign: TextAlign.center,

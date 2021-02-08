@@ -38,8 +38,6 @@ class _OTPPageState extends State<OTPPage> {
             onPressed: () {
               Navigator.of(context).pushNamed(
                 '/home'
-                /*context,
-                MaterialPageRoute(builder: (context) => Home()),*/
               );
             },
             child: Text("Verify",
