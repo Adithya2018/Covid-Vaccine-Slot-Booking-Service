@@ -5,6 +5,7 @@ import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'authenticate.dart';
+
 /*class LogIn extends StatefulWidget {
   @override
   _LogInState createState() => _LogInState();
@@ -63,23 +64,23 @@ class _SignInOptionsState extends State<SignInOptions> {
 
     final signOutAnonButton = Container(
         child: Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Colors.green[700],
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            //onPressed: () {}, // here we need to add the functionality
-            onPressed: () async {
-              UserData userX = await _auth.signOut();
-              print("signed out $userX");
-            },
-            child: Text("Sign out",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
-          ),
-        ));
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Colors.green[700],
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        //onPressed: () {}, // here we need to add the functionality
+        onPressed: () async {
+          UserData userX = await _auth.signOut();
+          print("signed out $userX");
+        },
+        child: Text("Sign out",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    ));
 
     //sign-in with email/mobile no. button
     final signInOthButton = Container(
@@ -237,15 +238,48 @@ class _LoginPageState extends State<LoginPage> {
         ));
 
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: null,
+          ),
+          title: Text('Welcome',
+              style: style.copyWith(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Refresh',
+              onPressed: null,
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(36.0),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -59,6 +59,40 @@ class _OTPPageState extends State<OTPPage> {
         // the App.build method, and use it to set our appbar title.
         title: Text("OTP Page"),
       ),*/
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: null,
+          ),
+          title: Text('OTP Verification',
+              style: style.copyWith(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Refresh',
+              onPressed: null,
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Scrollbar(
           child: SingleChildScrollView(

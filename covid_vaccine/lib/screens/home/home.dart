@@ -135,27 +135,39 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
-      appBar: AppBar(
-        //elevation: 1.0,
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          tooltip: 'Navigation menu',
-          onPressed: null,
-        ),
-        title: Text('COVID App',
-            style: style.copyWith(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              //fontSize: 40.0,
-            )),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
-            tooltip: 'Refresh',
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 5.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
             onPressed: null,
           ),
-        ],
+          title: Text('Home Page',
+              style: style.copyWith(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
+              )),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Refresh',
+              onPressed: null,
+            ),
+          ],
+        ),
       ),
       // body is the majority of the screen.
       body: Scrollbar(
