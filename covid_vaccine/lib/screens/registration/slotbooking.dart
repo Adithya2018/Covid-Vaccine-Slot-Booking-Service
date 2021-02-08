@@ -6,10 +6,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 class Slotbooking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SlotbookingPage(
-        title: "Slot booking Page",
-      ),
+    return SlotbookingPage(
+      title: "Slot booking Page",
     );
   }
 }
@@ -38,9 +36,9 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.push(
+          Navigator.pop(
             context,
-            MaterialPageRoute(builder: (context) => Registration()),
+            //MaterialPageRoute(builder: (context) => Registration()),
           );
         },
         child: Text("Cancel",
@@ -60,10 +58,12 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
+          /*
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => Home()),
-          );
+          );*/
+          Navigator.popUntil(context, ModalRoute.withName('/home'));
         },
         child: Text("Confirm",
             textAlign: TextAlign.center,

@@ -34,11 +34,12 @@ class _OTPPageState extends State<OTPPage> {
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            //onPressed: () {}, // here we need to add the functionality
+            // here we need to add the functionality
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Home()),
+              Navigator.of(context).pushNamed(
+                '/home'
+                /*context,
+                MaterialPageRoute(builder: (context) => Home()),*/
               );
             },
             child: Text("Verify",

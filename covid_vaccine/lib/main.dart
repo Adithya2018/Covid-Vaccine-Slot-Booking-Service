@@ -1,4 +1,9 @@
 import 'dart:ui';
+import 'package:covid_vaccine/models/user.dart';
+import 'package:covid_vaccine/screens/authenticate/signin.dart';
+import 'package:covid_vaccine/screens/home/home.dart';
+import 'package:covid_vaccine/screens/registration/registration.dart';
+import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,18 +43,23 @@ class MyApp extends StatelessWidget {
         // Check for errors
         if (snapshot.hasError) {
           return Container(
-            child: Text("the app doesn't work"),
+            child: Text("something isn't right"),
           );
         }
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return StreamProvider.value(
+          return StreamProvider<UserData>.value(
               value: AuthService().user,
               child: MaterialApp(
                 theme: new ThemeData(
                     scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
-                home: Wrapper(),
+                home: Wrapper(), // aka '/'
+                routes: <String, WidgetBuilder> {
+                  '/home': (BuildContext context) => new Home(), // display if signed in
+                  '/reg' : (BuildContext context) => new Registration(),
+                  '/sb' : (BuildContext context) => new Slotbooking(),
+                },
               ));
         }
 
