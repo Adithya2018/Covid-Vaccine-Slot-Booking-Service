@@ -19,12 +19,6 @@ class _LogInState extends State<LogIn> {
     );
   }
 }*/
-/*class SignIn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}*/
 
 class SignInOptions extends StatefulWidget {
   @override

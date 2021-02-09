@@ -36,7 +36,7 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           //Navigator.of(context).pop();
-          Navigator.popUntil(context, ModalRoute.withName('/home'));
+          Navigator.popUntil(context, ModalRoute.withName('/'));
         },
         child: Text("Cancel",
             textAlign: TextAlign.center,
@@ -60,7 +60,7 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
             context,
             MaterialPageRoute(builder: (context) => Home()),
           );*/
-          Navigator.popUntil(context, ModalRoute.withName('/home'));
+          Navigator.of(context).popUntil(ModalRoute.withName('/'));
         },
         child: Text("Confirm",
             textAlign: TextAlign.center,
