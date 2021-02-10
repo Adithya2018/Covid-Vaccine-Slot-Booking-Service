@@ -6,13 +6,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MyHomePage(
-      title: "home page",
+      title: "Home",
     );
-    /*Container(
-      child: MyHomePage(
-        title: "home page",
-      ),
-    );*/
   }
 }
 
@@ -50,7 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           //color: Colors.orange,
-          //color: Colors.blue,
           border: Border.all(color: Colors.grey /*[800]*/, width: 2.0),
           borderRadius: BorderRadius.all(
               Radius.circular(10.0)), // set rounded corner radius
@@ -95,7 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         decoration: BoxDecoration(
           //color: Colors.orange,
-          //color: Colors.blue,
           border: Border.all(color: Colors.grey /*[800]*/, width: 2.0),
           borderRadius: BorderRadius.all(
               Radius.circular(10.0)), // set rounded corner radius
@@ -137,9 +130,42 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [listItem, SizedBox(height: 20)],
               )),
     );
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: Text('Settings'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              title: Text('Sign out'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                Navigator.of(context).pop();
+                //Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
@@ -152,7 +178,11 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 30.0,
             ),
             tooltip: 'Navigation menu',
-            onPressed: null,
+            onPressed: () {
+              //Navigator.of(context).pushNamed('/hm');
+              //Scaffold.of(context).openDrawer();
+              _scaffoldKey.currentState.openDrawer();
+            },
           ),
           title: Text('Home Page',
               style: style.copyWith(
@@ -204,6 +234,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),*/
     );
   }
+
+
   /*Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -232,3 +264,40 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }*/
 }
+
+/*class HamburgerMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Text('Drawer Header'),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+          ),
+          ListTile(
+            title: Text('Item 1'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
+            title: Text('Item 2'),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              Navigator.of(context).pop();
+              //Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}*/

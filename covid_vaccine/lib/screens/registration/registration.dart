@@ -7,11 +7,14 @@ import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 class Registration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return RegistrationPage(
+      title: "registration page",
+    );
+    /*Container(
       child: RegistrationPage(
         title: "registration page",
       ),
-    );
+    );*/
   }
 }
 
@@ -94,10 +97,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          Navigator.pop(context);
-            /*context,
-            MaterialPageRoute(builder: (context) => Home()),
-          );*/
+          Navigator.of(context).pop();
         },
         child: Text("Cancel",
             textAlign: TextAlign.center,
@@ -116,11 +116,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () {
-          // changed to pop since we don't wish to store the context and just
-          // need to go to the most recent screen
           Navigator.of(context).pushNamed(
-            //context,
-            //MaterialPageRoute(builder: (context) => Slotbooking()),
             '/sb',
           );
         },

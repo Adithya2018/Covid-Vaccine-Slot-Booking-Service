@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:covid_vaccine/models/user.dart';
+import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 import 'package:covid_vaccine/screens/authenticate/signin.dart';
 import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:covid_vaccine/screens/registration/registration.dart';
@@ -55,10 +56,9 @@ class MyApp extends StatelessWidget {
                 theme: new ThemeData(
                     scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
                 home: Wrapper(), // aka '/'
-                routes: <String, WidgetBuilder> {
-                  '/home': (BuildContext context) => new Home(), // display if signed in
-                  '/reg' : (BuildContext context) => new Registration(),
-                  '/sb' : (BuildContext context) => new Slotbooking(),
+                routes: <String, WidgetBuilder>{
+                  '/reg': (BuildContext context) => new Registration(),
+                  '/sb': (BuildContext context) => new Slotbooking(),
                 },
               ));
         }

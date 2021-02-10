@@ -7,6 +7,7 @@ import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// this is the root ('/') widget
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -14,6 +15,9 @@ class Wrapper extends StatelessWidget {
     // return home or authenticate widget depending on the authentication state
     // i.e. whether the user has signed in (=not null) or signed out (=null)
     print(user);
+    /**/if(user == null){
+      return Home();
+    }
     return Authenticate();
   }
 }
