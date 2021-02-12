@@ -48,6 +48,8 @@ class _SignInOptionsState extends State<SignInOptions> {
             context,
             MaterialPageRoute(builder: (context) => Login()),
           );*/
+          Navigator.of(context).popUntil((route) => false);
+          Navigator.of(context).pushNamed('/');
         },
         child: Text("Anonymous",
             textAlign: TextAlign.center,
@@ -66,8 +68,11 @@ class _SignInOptionsState extends State<SignInOptions> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         //onPressed: () {}, // here we need to add the functionality
         onPressed: () async {
+          print("signing out");
           UserData userX = await _auth.signOut();
-          print("signed out $userX");
+          print("$userX signed out");
+          Navigator.of(context).popUntil((route) => false);
+          Navigator.of(context).pushNamed('/');
         },
         child: Text("Sign out",
             textAlign: TextAlign.center,

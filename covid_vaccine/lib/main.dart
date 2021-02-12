@@ -28,7 +28,6 @@ void main() {
 class MyApp extends StatelessWidget {
   // Create the initialization Future outside of `build`:
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   /*Future initFirebaseApp() async {
     final Future<FirebaseApp> _initialization = Firebase.initializeApp();
     //Firebase.initializeApp();

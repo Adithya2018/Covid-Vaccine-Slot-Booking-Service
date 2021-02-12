@@ -27,13 +27,17 @@ class AuthService {
     }
   }
 
-
   // email and password sign-in
 
   // register with email and password
 
   // sign out
   Future signOut() async {
-    _auth.signOut();
+    try {
+      return await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

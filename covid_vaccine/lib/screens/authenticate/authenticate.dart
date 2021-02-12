@@ -36,9 +36,12 @@ class _OTPPageState extends State<OTPPage> {
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             // here we need to add the functionality
             onPressed: () {
-              Navigator.of(context).pushNamed(
-                '/home'
-              );
+              /*Navigator.of(context).pushNamed(
+                '/'
+              );*/
+              /*Navigator.of(context).pop();
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);*/
+              Navigator.of(context).popAndPushNamed('/');
             },
             child: Text("Verify",
                 textAlign: TextAlign.center,

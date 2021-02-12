@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:covid_vaccine/screens/registration/registration.dart';
+import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
+import 'package:covid_vaccine/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -23,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final AuthService _auth = AuthService();
 
   void _incrementCounter() {
     setState(() {
@@ -141,12 +147,16 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text(
+                '(Anonymous)',
+                style: TextStyle(fontFamily: 'Monospace', fontSize: 25),
+              ),
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
             ),
             ListTile(
+              leading: Icon(Icons.settings),
               title: Text('Settings'),
               onTap: () {
                 // Update the state of the app.
@@ -155,12 +165,16 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.logout),
               title: Text('Sign out'),
-              onTap: () {
+              onTap: () async {
                 // Update the state of the app.
                 // ...
-                Navigator.of(context).pop();
-                //Navigator.pop(context);
+                print("signing out");
+                Navigator.of(context).popUntil((route) => false);
+                UserData userX = await _auth.signOut();
+                print("$userX signed out");
+                Navigator.of(context).pushNamed('/');
               },
             ),
           ],
@@ -178,11 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
               size: 30.0,
             ),
             tooltip: 'Navigation menu',
-            onPressed: () {
-              //Navigator.of(context).pushNamed('/hm');
-              //Scaffold.of(context).openDrawer();
-              _scaffoldKey.currentState.openDrawer();
-            },
+            onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           title: Text('Home Page',
               style: style.copyWith(
@@ -234,7 +244,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),*/
     );
   }
-
 
   /*Widget build(BuildContext context) {
     return Scaffold(
