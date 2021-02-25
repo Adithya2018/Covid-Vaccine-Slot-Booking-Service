@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 // this is the root ('/') widget
 class Wrapper extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserData>(context);
@@ -19,11 +18,12 @@ class Wrapper extends StatelessWidget {
     // i.e. whether the user has signed in (=not null) or signed out (=null)
 
     /**/if(user != null){
-      print("$user is signed in");
+      print("${user.uid} is signed in");
       return Home();
     }else {
       print("$user was signed out");
       return SignInOptions();
     } //Authenticate();
+    return SignInOptions();
   }
 }

@@ -53,11 +53,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
           obscureText: false,
           style: style,
           decoration: InputDecoration(
+              hoverColor: Colors.teal,
               contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               labelText: "Name",
-              //hintText: "Mobile No/Email",
+              //hintText: "Name",
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+                borderRadius: BorderRadius.circular(10.0),
+              )),
         ));
 
     final dobField = Container(
@@ -171,8 +173,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
             /*width: 300,
               padding: const EdgeInsets.all(36.0),*/
             child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Container(
+                    //width: 330,
                     child: Column(
                         /*verticalDirection: VerticalDirection.down,
                 crossAxisAlignment: CrossAxisAlignment.center,*/
@@ -181,14 +184,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      // CircularProfileAvatar(
-                      //   '"assets/profile.png"',
-                      //   borderColor: Colors.black12,
-                      //   backgroundColor: Colors.transparent,
-                      //   borderWidth: 1,
-                      //   elevation: 2,
-                      //   radius: 50,
-                      // ),
+                      /*CircularProfileAvatar(
+                         '"assets/profile.png"',
+                         borderColor: Colors.black12,
+                         backgroundColor: Colors.transparent,
+                         borderWidth: 1,
+                         elevation: 2,
+                         radius: 50,
+                         ),*/
                       SizedBox(
                         height: 150.0,
                         child: Image.asset(

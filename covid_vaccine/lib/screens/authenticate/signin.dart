@@ -4,6 +4,8 @@ import 'package:covid_vaccine/models/user.dart';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'authenticate.dart';
 
 /*class LogIn extends StatefulWidget {
@@ -149,15 +151,130 @@ class Login extends StatelessWidget {
   }
 }
 
+class SignInWithEmail extends StatefulWidget {
+  @override
+  _SignInWithEmailState createState() => _SignInWithEmailState();
+}
+
+class _SignInWithEmailState extends State<SignInWithEmail> {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextEditingController c1 = new TextEditingController();
+  TextEditingController c2 = new TextEditingController();
+
+  void printPwd() {
+    print(c2.text);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    c1.addListener(() => print(c1.text));
+    c2.addListener(() => print(c2.text));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final emailPhNoField = Container(
+        width: 800,
+        child: TextField(
+            controller: c1,
+            style: style,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+              labelText: "Email/Phone No.",
+              hintText: "Email/Phone No.",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+            )));
+
+    final pwdField = Container(
+        width: 800,
+        child: TextField(
+          obscureText: true,
+          style: style,
+          controller: c2,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            labelText: "Password",
+            hintText: "Password",
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+        ));
+
+    final signInButton = Container(
+        width: 200,
+        child: Material(
+          elevation: 5.0,
+          borderRadius: BorderRadius.circular(30.0),
+          color: Colors.blue,
+          child: MaterialButton(
+            minWidth: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            onPressed: () async {
+              print("nEmail/Phone No.: ${c1.text}");
+              print("nEmail/Phone No.: ${c2.text}");
+            },
+            child: Text("Sign in",
+                textAlign: TextAlign.center,
+                style: style.copyWith(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ),
+        ));
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          child: Center(
+            /*width: 300,
+              padding: const EdgeInsets.all(36.0),*/
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Container(
+                //width: 330,
+                child: Column(
+                  /*verticalDirection: VerticalDirection.down,
+                crossAxisAlignment: CrossAxisAlignment.center,*/
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 145,
+                    ),
+                    SizedBox(
+                      height: 160.0,
+                      child: Image.asset(
+                        "assets/logo.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    emailPhNoField,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    pwdField,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    signInButton,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
   final String title;
   @override
   _LoginPageState createState() => _LoginPageState();

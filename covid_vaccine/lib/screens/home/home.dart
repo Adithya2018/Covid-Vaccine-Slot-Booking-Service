@@ -112,10 +112,6 @@ class _MyHomePageState extends State<MyHomePage> {
             //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40.0)),
             onPressed: () {
               Navigator.of(context).pushNamed('/reg');
-              /*push(
-                context,
-                MaterialPageRoute(builder: (context) => RegistrationPage()),
-              );*/
             },
             child: Center(
               child: Container(
