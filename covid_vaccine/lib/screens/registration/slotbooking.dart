@@ -122,41 +122,42 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                  //width: 800,
-                  children: <Widget>[
-                    SfCalendar(
-                      view: CalendarView.month,
-                      dataSource: MeetingDataSource(_getDataSource()),
-                      // by default the month appointment display mode set as Indicator, we can
-                      // change the display mode as appointment using the appointment display
-                      // mode property
-                      monthViewSettings: MonthViewSettings(
-                          appointmentDisplayMode:
-                              MonthAppointmentDisplayMode.appointment),
-                    ),
-                    Row(
-                      children: [
-                        new Flexible(
-                          child: Container(
-                              child: cancelButton,
-                              alignment: Alignment.centerLeft),
-                          flex: 2,
+                //width: 800,
+                children: <Widget>[
+                  SfCalendar(
+                    view: CalendarView.month,
+                    dataSource: MeetingDataSource(_getDataSource()),
+                    // by default the month appointment display mode set as Indicator, we can
+                    // change the display mode as appointment using the appointment display
+                    // mode property
+                    monthViewSettings: MonthViewSettings(
+                        appointmentDisplayMode:
+                            MonthAppointmentDisplayMode.appointment),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      new Flexible(
+                        child: Container(
+                            child: cancelButton,
+                            alignment: Alignment.centerLeft),
+                        flex: 2,
+                      ),
+                      new Flexible(
+                        child: Container(
+                          alignment: Alignment.center,
                         ),
-                        new Flexible(
-                          child: Container(
-                            alignment: Alignment.center,
-                          ),
-                          flex: 1,
-                        ),
-                        new Flexible(
-                          child: Container(
-                              child: confirmButton,
-                              alignment: Alignment.centerRight),
-                          flex: 2,
-                        )
-                      ],
-                    ),
-                  ]),
+                        flex: 1,
+                      ),
+                      new Flexible(
+                        child: Container(
+                            child: confirmButton,
+                            alignment: Alignment.centerRight),
+                        flex: 2,
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ), // This trailing comma makes auto-formatting nicer for build methods.
         ),

@@ -214,8 +214,8 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
             minWidth: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             onPressed: () async {
-              print("nEmail/Phone No.: ${c1.text}");
-              print("nEmail/Phone No.: ${c2.text}");
+              print("Email/Phone No.: ${c1.text}");
+              print("Password: ${c2.text}");
             },
             child: Text("Sign in",
                 textAlign: TextAlign.center,
