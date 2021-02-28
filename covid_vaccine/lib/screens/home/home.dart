@@ -186,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     final addBtn = Container(
       //width: 365,
-      height: 150,
+      height: 110,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         //color: Colors.orange,
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      //backgroundColor: Colors.blue[100],
+      backgroundColor: Colors.white,
       drawer: Drawer(
         child: ListView(
           // Important: Remove any padding from the ListView.
@@ -243,7 +243,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontFamily: 'Monospace', fontSize: 25),
               ),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.cyan[300],
               ),
             ),
             ListTile(
@@ -313,7 +313,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      // body is the majority of the screen.
+
       body: Scrollbar(
         child: SingleChildScrollView(
           controller: _scrollController,
@@ -325,8 +325,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   SizedBox(
                     height: 10,
                   ),
+                  /*addBtn,
+                  SizedBox(
+                    height: 20,
+                  ),*/
                   _buttonList,
-                  /*addBtn,*/
                   SizedBox(
                     height: 45,
                   ),

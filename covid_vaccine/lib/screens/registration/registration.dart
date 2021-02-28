@@ -90,44 +90,52 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ));
 
     final cancelButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.red[900],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: Text("Cancel",
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.red[900],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          //onPressed: () {}, // here we need to add the functionality
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            "Cancel",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-    ));
+    );
 
     final nextButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.green[700],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: () {
-          Navigator.of(context).pushNamed(
-            '/sb',
-          );
-        },
-        child: Text("Next",
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.green[700],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          //onPressed: () {}, // here we need to add the functionality
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              '/sb',
+            );
+          },
+          child: Text(
+            "Next",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
-    ));
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -252,6 +260,229 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CreateAccWithEmail extends StatefulWidget {
+  @override
+  _CreateAccWithEmailState createState() => _CreateAccWithEmailState();
+}
+
+class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  String email = "";
+  String pwd = "";
+  String confPwd = "";
+
+  FocusNode n1;
+  FocusNode n2;
+  FocusNode n3;
+
+  @override
+  void initState() {
+    super.initState();
+    n1 = FocusNode();
+    n2 = FocusNode();
+    n3 = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    n1.dispose();
+    n2.dispose();
+    n3.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final emailField = Container(
+      width: 500,
+      child: TextField(
+        focusNode: n1,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (term) {
+          n1.unfocus();
+          FocusScope.of(context).requestFocus(n2);
+        },
+        style: style,
+        onChanged: (val) {
+          setState(() {
+            email = val;
+          });
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Email",
+          //hintText: "Email/Phone No.",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
+
+    final pwdField = Container(
+      width: 500,
+      child: TextField(
+        focusNode: n2,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (term) {
+          n2.unfocus();
+          FocusScope.of(context).requestFocus(n3);
+        },
+        obscureText: true,
+        style: style,
+        onChanged: (val) {
+          setState(() {
+            pwd = val;
+          });
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Password",
+          hintText: "Password",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
+
+    final confPwdField = Container(
+      width: 500,
+      child: TextField(
+        focusNode: n3,
+        obscureText: true,
+        style: style,
+        onChanged: (val) {
+          setState(() {
+            confPwd = val;
+          });
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Re-type password",
+          //hintText: "Password",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
+
+    final submitButton = Container(
+      width: 200,
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.cyan[300],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
+          onPressed: () async {
+            print("Email: $email");
+            print("Password: $pwd");
+            print("Re-typed password: $confPwd");
+          },
+          child: Text(
+            "Next",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    );
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 3.0,
+          backgroundColor: Colors.cyan[300],
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: () => print("Nav menu"),
+          ),
+          title: Text(
+            'Create account', // Page',
+            style: style.copyWith(
+              color: Colors.grey[100],
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.refresh,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Refresh',
+              onPressed: null,
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Container(
+                  //width: 330,
+                  child: Column(
+                    /*verticalDirection: VerticalDirection.down,
+                    crossAxisAlignment: CrossAxisAlignment.center,*/
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      /*SizedBox(
+                        height: 145,
+                      ),*/
+                      SizedBox(
+                        height: 160.0,
+                        child: Image.asset(
+                          "assets/logo.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      emailField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      pwdField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      confPwdField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      submitButton,
+                    ],
+                  ),
                 ),
               ),
             ),

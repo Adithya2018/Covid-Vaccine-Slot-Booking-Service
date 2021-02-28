@@ -4,8 +4,6 @@ import 'package:covid_vaccine/models/user.dart';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:keyboard_visibility/keyboard_visibility.dart';
 import 'authenticate.dart';
 
 /*class LogIn extends StatefulWidget {
@@ -33,73 +31,78 @@ class _SignInOptionsState extends State<SignInOptions> {
   @override
   Widget build(BuildContext context) {
     final signInAnonButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.green[700],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: () async {
-          UserData userX = await _auth.signInAnon();
-          print(userX == null
-              ? 'sign in was not successful'
-              : 'signed in anonymously: $userX.uid');
-          /*Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Login()),
-          );*/
-          Navigator.of(context).popUntil((route) => false);
-          Navigator.of(context).pushNamed('/');
-        },
-        child: Text("Anonymous",
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.green[700],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          //onPressed: () {}, // here we need to add the functionality
+          onPressed: () async {
+            UserData userX = await _auth.signInAnon();
+            print(userX == null
+                ? 'sign in was not successful'
+                : 'signed in anonymously: $userX.uid');
+            Navigator.of(context).popUntil((route) => false);
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text(
+            "Anonymous",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-    ));
+    );
 
     final signOutAnonButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.green[700],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: () async {
-          print("signing out");
-          UserData userX = await _auth.signOut();
-          print("$userX signed out");
-          Navigator.of(context).popUntil((route) => false);
-          Navigator.of(context).pushNamed('/');
-        },
-        child: Text("Sign out",
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.green[700],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          // here we need to add the functionality
+          onPressed: () async {
+            print("signing out");
+            UserData userX = await _auth.signOut();
+            print("$userX signed out");
+            Navigator.of(context).popUntil((route) => false);
+            Navigator.of(context).pushNamed('/');
+          },
+          child: Text(
+            "Sign out",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-    ));
+    );
 
     //sign-in with email/mobile no. button
     final signInOthButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.red[900],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: null,
-        child: Text("email/mobile no.",
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.red[900],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          //onPressed: () {}, // here we need to add the functionality
+          onPressed: null,
+          child: Text(
+            "email/mobile no.",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-    ));
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text('sign in options')),
@@ -175,94 +178,103 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
   @override
   Widget build(BuildContext context) {
     final emailPhNoField = Container(
-        width: 800,
-        child: TextField(
-            controller: c1,
-            style: style,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              labelText: "Email/Phone No.",
-              hintText: "Email/Phone No.",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-            )));
+      width: 400,
+      child: TextField(
+        controller: c1,
+        style: style,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Email",
+          //hintText: "Email/Phone No.",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
 
     final pwdField = Container(
-        width: 800,
-        child: TextField(
-          obscureText: true,
-          style: style,
-          controller: c2,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            labelText: "Password",
-            hintText: "Password",
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
-            ),
+      width: 400,
+      child: TextField(
+        obscureText: true,
+        style: style,
+        controller: c2,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Password",
+          hintText: "Password",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
           ),
-        ));
+        ),
+      ),
+    );
 
     final signInButton = Container(
-        width: 200,
-        child: Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Colors.blue,
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            onPressed: () async {
-              print("Email/Phone No.: ${c1.text}");
-              print("Password: ${c2.text}");
-            },
-            child: Text("Sign in",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
+      width: 200,
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.blue,
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
           ),
-        ));
+          onPressed: () async {
+            print("Email: ${c1.text}");
+            print("Password: ${c2.text}");
+          },
+          child: Text(
+            "Sign in",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    );
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          child: Center(
-            /*width: 300,
-              padding: const EdgeInsets.all(36.0),*/
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Container(
-                //width: 330,
-                child: Column(
-                  /*verticalDirection: VerticalDirection.down,
-                crossAxisAlignment: CrossAxisAlignment.center,*/
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 145,
-                    ),
-                    SizedBox(
-                      height: 160.0,
-                      child: Image.asset(
-                        "assets/logo.png",
-                        fit: BoxFit.contain,
+      body: Center(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Container(
+                  //width: 330,
+                  child: Column(
+                    /*verticalDirection: VerticalDirection.down,
+                    crossAxisAlignment: CrossAxisAlignment.center,*/
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      /*SizedBox(
+                        height: 145,
+                      ),*/
+                      SizedBox(
+                        height: 160.0,
+                        child: Image.asset(
+                          "assets/logo.png",
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    emailPhNoField,
-                    SizedBox(
-                      height: 40,
-                    ),
-                    pwdField,
-                    SizedBox(
-                      height: 40,
-                    ),
-                    signInButton,
-                  ],
+                      SizedBox(
+                        height: 40,
+                      ),
+                      emailPhNoField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      pwdField,
+                      SizedBox(
+                        height: 40,
+                      ),
+                      signInButton,
+                    ],
+                  ),
                 ),
               ),
             ),
