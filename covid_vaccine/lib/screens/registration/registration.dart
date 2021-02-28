@@ -53,11 +53,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
           obscureText: false,
           style: style,
           decoration: InputDecoration(
+              hoverColor: Colors.teal,
               contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
               labelText: "Name",
-              //hintText: "Mobile No/Email",
+              //hintText: "Name",
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
+                borderRadius: BorderRadius.circular(10.0),
+              )),
         ));
 
     final dobField = Container(
@@ -171,92 +173,88 @@ class _RegistrationPageState extends State<RegistrationPage> {
             /*width: 300,
               padding: const EdgeInsets.all(36.0),*/
             child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                    child: Column(
-                        /*verticalDirection: VerticalDirection.down,
+              padding: const EdgeInsets.all(30.0),
+              child: Container(
+                //width: 330,
+                child: Column(
+                  /*verticalDirection: VerticalDirection.down,
                 crossAxisAlignment: CrossAxisAlignment.center,*/
-                        //mainAxisAlignment: MainAxisAlignment.center,
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    /*CircularProfileAvatar(
+                         '"assets/profile.png"',
+                         borderColor: Colors.black12,
+                         backgroundColor: Colors.transparent,
+                         borderWidth: 1,
+                         elevation: 2,
+                         radius: 50,
+                         ),*/
+                    SizedBox(
+                      height: 150.0,
+                      child: Image.asset(
+                        "assets/profile.png",
+                        fit: BoxFit.contain,
+                        color: Colors.blue[600],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // TODO: implement the redirect to camera app button
+                    // Icon(Icons.camera, size: 40.0),
+                    SizedBox(
+                      height: 25.0,
+                      child: Image.asset(
+                        "assets/camera.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    nameField,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    dobField,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    aadhaarField,
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Center(
+                      child: Row(
                         children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // CircularProfileAvatar(
-                      //   '"assets/profile.png"',
-                      //   borderColor: Colors.black12,
-                      //   backgroundColor: Colors.transparent,
-                      //   borderWidth: 1,
-                      //   elevation: 2,
-                      //   radius: 50,
-                      // ),
-                      SizedBox(
-                        height: 150.0,
-                        child: Image.asset(
-                          "assets/profile.png",
-                          fit: BoxFit.contain,
-                          color: Colors.blue[600],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // TODO: implement the redirect to camera app button
-                      // Icon(Icons.camera, size: 40.0),
-                      SizedBox(
-                        height: 25.0,
-                        child: Image.asset(
-                          "assets/camera.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: 40,
-                      ),
-                      nameField,
-                      SizedBox(
-                        height: 40,
-                      ),
-                      dobField,
-                      SizedBox(
-                        height: 40,
-                      ),
-                      aadhaarField,
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Center(
-                        child: Row(
-                          children: [
-                            new Flexible(
-                              child: Container(
-                                  child: cancelButton,
-                                  alignment: Alignment.centerLeft),
-                              flex: 2,
+                          new Flexible(
+                            child: Container(
+                                child: cancelButton,
+                                alignment: Alignment.centerLeft),
+                            flex: 2,
+                          ),
+                          new Flexible(
+                            child: Container(
+                              alignment: Alignment.center,
                             ),
-                            new Flexible(
-                              child: Container(
-                                alignment: Alignment.center,
-                              ),
-                              flex: 1,
-                            ),
-                            new Flexible(
-                              child: Container(
-                                  child: nextButton,
-                                  alignment: Alignment.centerRight),
-                              flex: 2,
-                            )
-                            //Spacer(),
-                            // nextButton,
-                            // Spacer(
-                            //   flex: 1,
-                            // ),
-                            // cancelButton,
-                            // Spacer(),
-                          ],
-                        ),
+                            flex: 1,
+                          ),
+                          new Flexible(
+                            child: Container(
+                                child: nextButton,
+                                alignment: Alignment.centerRight),
+                            flex: 2,
+                          )
+                        ],
                       ),
-                    ]))),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
