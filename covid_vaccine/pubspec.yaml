@@ -36,8 +36,9 @@ dependencies:
   table_calendar: ^2.3.3
   provider: ^4.3.3
   syncfusion_flutter_calendar: ^18.4.41
-  keyboard_visibility: ^0.5.6
-  flutter_keyboard_visibility: ^4.0.3
+  #keyboard_visibility: ^0.5.6
+  #flutter_keyboard_visibility: ^4.0.3
+  otp_text_field: ^1.0.2
   # extras (above)
 
 dev_dependencies:

@@ -62,7 +62,8 @@ class MyApp extends StatelessWidget {
             value: AuthService().user,
             child: MaterialApp(
               theme: new ThemeData(
-                  scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
+                scaffoldBackgroundColor: const Color(0xFFF6F6F6),
+              ),
               home: Wrapper(), // aka '/'
               routes: <String, WidgetBuilder>{
                 '/reg': (BuildContext context) => new Registration(),
@@ -79,7 +80,8 @@ class MyApp extends StatelessWidget {
             body: Column(
               children: <Widget>[
                 CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
                 ),
                 Text(
                   "Loading...",

@@ -1,5 +1,7 @@
 import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:flutter/material.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/style.dart';
 
 class Authenticate extends StatelessWidget {
   @override
@@ -22,33 +24,82 @@ class OTPPage extends StatefulWidget {
 
 class _OTPPageState extends State<OTPPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  String _currentPin = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final otpField = OTPTextField(
+      onChanged: (pin) async {
+        _currentPin = pin;
+        print("Current PIN: " + pin);
+      },
+      obscureText: true,
+      length: 4,
+      width: MediaQuery.of(context).size.width,
+      fieldWidth: 40,
+      style: TextStyle(
+        fontSize: 30,
+      ),
+      textFieldAlignment: MainAxisAlignment.spaceAround,
+      fieldStyle: FieldStyle.underline,
+      onCompleted: (pin) {
+        _currentPin = pin;
+        print("Completed: " + pin);
+      },
+    );
+
     final validateButton = Container(
-        width: 200,
-        child: Material(
-          elevation: 5.0,
-          borderRadius: BorderRadius.circular(30.0),
-          color: Color(0xff138808),
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-            // here we need to add the functionality
-            onPressed: () {
-              /*Navigator.of(context).pushNamed(
-                '/'
-              );*/
-              /*Navigator.of(context).pop();
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);*/
-              Navigator.of(context).popAndPushNamed('/');
-            },
-            child: Text("Verify",
-                textAlign: TextAlign.center,
-                style: style.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold)),
+      width: 200,
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.cyan[400], //Color(0xff138808),
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          height: 50,
+          //padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
           ),
-        ));
+          onPressed: () async {
+            print("Submitted PIN: $_currentPin");
+            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+          },
+          child: Container(
+            child: Text(
+              "Verify",
+              textAlign: TextAlign.center,
+              style: style.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    final resendButton = TextButton(
+      onPressed: () async {
+        print("Resend OTP");
+      },
+      child: Text(
+        "Resend OTP",
+        style: TextStyle(
+          color: Colors.lightBlueAccent,
+        ),
+      ),
+    );
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -62,7 +113,7 @@ class _OTPPageState extends State<OTPPage> {
         title: Text("OTP Page"),
       ),*/
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
+      /*appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
           elevation: 5.0,
@@ -76,12 +127,14 @@ class _OTPPageState extends State<OTPPage> {
             tooltip: 'Navigation menu',
             onPressed: null,
           ),
-          title: Text('OTP Verification',
-              style: style.copyWith(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0,
-              )),
+          title: Text(
+            'OTP Verification',
+            style: style.copyWith(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            ),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -94,7 +147,7 @@ class _OTPPageState extends State<OTPPage> {
             ),
           ],
         ),
-      ),
+      ),*/
       body: Center(
         child: Scrollbar(
           child: SingleChildScrollView(
@@ -103,23 +156,38 @@ class _OTPPageState extends State<OTPPage> {
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Column(
-                  //width: 800,
-                  children: <Widget>[
-                    SizedBox(height: 180.0),
-                    TextField(
-                      obscureText: true,
-                      style: style,
-                      decoration: InputDecoration(
-                          contentPadding:
-                              EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          labelText: "Enter OTP",
-                          //hintText: "OTP",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(32.0))),
+                children: <Widget>[
+                  Text(
+                    "Enter the OTP",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 20.0,
                     ),
-                    SizedBox(height: 25.0),
-                    validateButton
-                  ]),
+                  ),
+                  SizedBox(height: 25.0),
+                  otpField,
+                  /*TextField(
+                    textAlign: TextAlign.center,
+                    obscureText: true,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                    ),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      labelText: "Enter OTP",
+                      //hintText: "OTP",
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
+                    ),
+                  ),*/
+                  SizedBox(height: 60.0),
+                  validateButton,
+                  SizedBox(height: 10.0),
+                  resendButton,
+                ],
+              ),
             ),
           ), // This trailing comma makes auto-formatting nicer for build methods.
         ),
