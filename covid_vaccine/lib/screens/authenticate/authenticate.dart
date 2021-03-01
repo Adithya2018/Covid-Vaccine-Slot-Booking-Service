@@ -1,4 +1,3 @@
-import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -36,6 +35,20 @@ class _OTPPageState extends State<OTPPage> {
     super.dispose();
   }
 
+  final _verifyButtonKey = GlobalKey();
+  int _colorListIndex = 0;
+  List<Color> _verifyButtonColor = <Color>[
+    Color.fromRGBO(0, 200, 130, 1.0),//(0xFF00B464), // RGB code tweaked from (0, 226, 152, 1.0)
+    Colors.cyan[400],
+    Color(0xFF29B6F6),
+  ];
+
+  void setColor(int c) {
+    setState(() {
+      _colorListIndex = c;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final otpField = OTPTextField(
@@ -54,17 +67,19 @@ class _OTPPageState extends State<OTPPage> {
       fieldStyle: FieldStyle.underline,
       onCompleted: (pin) {
         _currentPin = pin;
-        print("Completed: " + pin);
+        print("Completed: " + _currentPin);
       },
     );
 
-    final validateButton = Container(
+    final verifyButton = Container(
       width: 200,
       child: Material(
-        elevation: 5.0,
+        elevation: 3.0,
         borderRadius: BorderRadius.circular(30.0),
-        color: Colors.cyan[400], //Color(0xff138808),
+        color: _verifyButtonColor[_colorListIndex], //Colors.cyan[400],
+
         child: MaterialButton(
+          key: _verifyButtonKey,
           minWidth: MediaQuery.of(context).size.width,
           height: 50,
           //padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -72,6 +87,8 @@ class _OTPPageState extends State<OTPPage> {
             borderRadius: new BorderRadius.circular(30.0),
           ),
           onPressed: () async {
+            setColor((_colorListIndex + 1) % _verifyButtonColor.length);
+            print("_colorListIndex = $_colorListIndex");
             print("Submitted PIN: $_currentPin");
             Navigator.of(context).popUntil(ModalRoute.withName('/'));
           },
@@ -151,8 +168,6 @@ class _OTPPageState extends State<OTPPage> {
       body: Center(
         child: Scrollbar(
           child: SingleChildScrollView(
-            // Center is a layout widget. It takes a single child and positions it
-            // in the middle of the parent.
             child: Padding(
               padding: const EdgeInsets.all(36.0),
               child: Column(
@@ -166,24 +181,8 @@ class _OTPPageState extends State<OTPPage> {
                   ),
                   SizedBox(height: 25.0),
                   otpField,
-                  /*TextField(
-                    textAlign: TextAlign.center,
-                    obscureText: true,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      labelText: "Enter OTP",
-                      //hintText: "OTP",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                      ),
-                    ),
-                  ),*/
                   SizedBox(height: 60.0),
-                  validateButton,
+                  verifyButton,
                   SizedBox(height: 10.0),
                   resendButton,
                 ],
