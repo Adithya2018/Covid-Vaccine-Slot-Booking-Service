@@ -51,14 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
       //width: 375,
       height: 110,
       alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
+      /*decoration: BoxDecoration(
         //color: Colors.orange,
         border: Border.all(color: Colors.grey /*[800]*/, width: 1.5),
         borderRadius: BorderRadius.all(
           Radius.circular(10.0),
         ), // set rounded corner radius
         //boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black,offset: Offset(1,3))]// make rounded corner of border
-      ),
+      ),*/
       child: Material(
         elevation: 3.0,
         borderRadius: BorderRadius.circular(10.0),
@@ -121,28 +121,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       SizedBox(
                         height: 10.0,
                       ),
-                      Row(children: <Widget>[
-                        Text(
-                          "ID: ",
-                          textAlign: TextAlign.left,
-                          style: style.copyWith(
-                            color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: 'Monospace',
-                            fontSize: 14.0,
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "ID: ",
+                            textAlign: TextAlign.left,
+                            style: style.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Monospace',
+                              fontSize: 14.0,
+                            ),
                           ),
-                        ),
-                        Text(
-                          "e5bbb42858be",
-                          textAlign: TextAlign.left,
-                          style: style.copyWith(
-                            color: Colors.black45,
-                            fontWeight: FontWeight.normal,
-                            fontFamily: 'Monospace',
-                            fontSize: 14.0,
+                          Text(
+                            "e5bbb42858be",
+                            textAlign: TextAlign.left,
+                            style: style.copyWith(
+                              color: Colors.black45,
+                              fontWeight: FontWeight.normal,
+                              fontFamily: 'Monospace',
+                              fontSize: 14.0,
+                            ),
                           ),
-                        ),
-                      ],),
+                        ],
+                      ),
                       SizedBox(
                         height: 10.0,
                       ),
@@ -158,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontSize: 14.0,
                             ),
                           ),
-                          /**/Icon(
+                          /**/ Icon(
                             Icons.check_circle,
                             size: 14,
                             color: Colors.green,
@@ -192,7 +194,8 @@ class _MyHomePageState extends State<MyHomePage> {
         //color: Colors.orange,
         border: Border.all(color: Colors.grey /*[800]*/, width: 1.5),
         borderRadius: BorderRadius.all(
-            Radius.circular(10.0)), // set rounded corner radius
+          Radius.circular(10.0),
+        ), // set rounded corner radius
         //boxShadow: [BoxShadow(blurRadius: 10,color: Colors.black,offset: Offset(1,3))]// make rounded corner of border
       ),
       child: Material(
@@ -204,7 +207,8 @@ class _MyHomePageState extends State<MyHomePage> {
           minWidth: MediaQuery.of(context).size.width,
           //height: 70,
           //padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          //shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(40.0)),
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
           onPressed: () {
             Navigator.of(context).pushNamed('/reg');
           },
@@ -275,14 +279,14 @@ class _MyHomePageState extends State<MyHomePage> {
           leading: IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.blue,
+              color: Colors.white,
               size: 30.0,
             ),
             tooltip: 'Navigation menu',
             onPressed: () => _scaffoldKey.currentState.openDrawer(),
           ),
           title: Text(
-            'Home',// Page',
+            'Home', // Page',
             style: style.copyWith(
               color: Colors.grey[100],
               fontWeight: FontWeight.bold,
@@ -293,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(
                 Icons.add,
-                color: Colors.blue,
+                color: Colors.white,
                 size: 30.0,
               ),
               tooltip: 'Add',
@@ -304,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
             IconButton(
               icon: Icon(
                 Icons.refresh,
-                color: Colors.blue,
+                color: Colors.white,
                 size: 30.0,
               ),
               tooltip: 'Refresh',
@@ -313,7 +317,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-
       body: Scrollbar(
         child: SingleChildScrollView(
           controller: _scrollController,
