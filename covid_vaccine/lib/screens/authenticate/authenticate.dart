@@ -1,15 +1,28 @@
+import 'package:covid_vaccine/screens/authenticate/signin.dart';
+import 'package:covid_vaccine/screens/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
-class Authenticate extends StatelessWidget {
+class Authenticate extends StatefulWidget {
+  @override
+  _AuthenticateState createState() => _AuthenticateState();
+}
+
+class _AuthenticateState extends State<Authenticate> {
+  bool showSignIn = true;
+  void toggleView() {
+    setState(() {
+      showSignIn = !showSignIn;
+      print(showSignIn);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: OTPPage(
-        title: "OTP Page",
-      ),
-    );
+    return showSignIn
+        ? SignInWithEmail(toggleView: toggleView)
+        : CreateAccWithEmail(toggleView: toggleView);
   }
 }
 
@@ -38,7 +51,8 @@ class _OTPPageState extends State<OTPPage> {
   final _verifyButtonKey = GlobalKey();
   int _colorListIndex = 0;
   List<Color> _verifyButtonColor = <Color>[
-    Color.fromRGBO(0, 200, 130, 1.0),//(0xFF00B464), // RGB code tweaked from (0, 226, 152, 1.0)
+    Color.fromRGBO(0, 200, 130,
+        1.0), //(0xFF00B464), // RGB code tweaked from (0, 226, 152, 1.0)
     Colors.cyan[400],
     Color(0xFF29B6F6),
   ];

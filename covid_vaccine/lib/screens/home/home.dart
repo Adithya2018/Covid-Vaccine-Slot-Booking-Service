@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //width: 375,
       height: 110,
       alignment: Alignment.bottomCenter,
-      /**/ decoration: BoxDecoration(
+      decoration: BoxDecoration(
         //color: Colors.orange,
         border: Border.all(color: Colors.grey /*[800]*/, width: 1.5),
         borderRadius: BorderRadius.all(
@@ -91,12 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey /*[800]*/,
-                          width: 1.5,
+                          color: Color.fromRGBO(0, 0, 0, 0.15),
+                          width: 1.0,
                         ),
                         borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ), // set rounded corner radius
+                          Radius.circular(31.0),
+                        ),
                       ),
                       child: CircleAvatar(
                         child: Image(
@@ -106,17 +106,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         backgroundColor: Colors.white,
                       ),
                     ),
-                    /*child: CircularProfileAvatar(
-                      '',
-                      child: Image(
-                        image: AssetImage('assets/profile.png'),
-                      ),
-                      borderColor: Colors.black12,
-                      backgroundColor: Colors.white,
-                      borderWidth: 1,
-                      elevation: 2,
-                      radius: 35,
-                    ),*/
                   ),
                   Column(
                     //mainAxisAlignment: MainAxisAlignment.start,
@@ -176,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontSize: 14.0,
                             ),
                           ),
-                          /**/ Icon(
+                          Icon(
                             Icons.check_circle,
                             size: 14,
                             color: Colors.green,
@@ -224,7 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
           //height: 70,
           //padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(10.0)),
+            borderRadius: new BorderRadius.circular(10.0),
+          ),
           onPressed: () {
             Navigator.of(context).pushNamed('/reg');
           },
