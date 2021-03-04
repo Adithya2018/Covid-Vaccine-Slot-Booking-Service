@@ -1,33 +1,97 @@
 import 'dart:ui';
-
+import 'package:covid_vaccine/models/user.dart';
+import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
+import 'package:covid_vaccine/screens/authenticate/signin.dart';
+import 'package:covid_vaccine/screens/home/home.dart';
+import 'package:covid_vaccine/screens/registration/registration.dart';
+import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
+import 'package:covid_vaccine/services/auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, MaterialApp, StatelessWidget, ThemeData, Widget, runApp;
+    show
+        BuildContext,
+        CircularProgressIndicator,
+        Colors,
+        MaterialApp,
+        Scaffold,
+        StatelessWidget,
+        ThemeData,
+        Widget,
+        runApp;
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
+
 /*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';*/
 
-void main() => runApp(MyApp()); //MyApp()
+/*void main() {
+
+}//=> runApp(MyApp()); //MyApp()*/
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // Create the initialization Future outside of `build`:
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+  /*Future initFirebaseApp() async {
+    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+    //Firebase.initializeApp();
+    return _initialization;
+  }*/
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      /*title: 'Flutter login UI',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.green,
-      ),*/
-      theme: new ThemeData(scaffoldBackgroundColor: const Color(0xFFF6F6F6)),
-      home: Wrapper(),
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _initialization,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Container(
+            child: Text("something isn't right"),
+          );
+        }
+
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return StreamProvider<UserData>.value(
+            value: AuthService().user,
+            child: MaterialApp(
+              theme: new ThemeData(
+                scaffoldBackgroundColor: const Color(0xFFF6F6F6),
+              ),
+              home: Wrapper(), // aka '/'
+              routes: <String, WidgetBuilder>{
+                '/reg': (BuildContext context) => new Registration(),
+                '/sb': (BuildContext context) => new Slotbooking(),
+              },
+            ),
+          );
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return MaterialApp(
+          home: Scaffold(
+            backgroundColor: Colors.white,
+            body: Column(
+              children: <Widget>[
+                CircularProgressIndicator(
+                  valueColor:
+                      new AlwaysStoppedAnimation<Color>(Colors.lightBlue),
+                ),
+                Text(
+                  "Loading...",
+                  style: TextStyle(color: Color(0xFFFFFFFF)),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

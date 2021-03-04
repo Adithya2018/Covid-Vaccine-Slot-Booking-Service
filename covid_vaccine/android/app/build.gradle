@@ -62,10 +62,11 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     // copied from Firebase console during project creation
-    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation platform('com.google.firebase:firebase-bom:26.4.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     // copied from Firebase console during project creation (above lines)
 }
 
 // copied from Firebase console during project creation
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.example.covid_vaccine'
+//apply plugin: 'com.google.gms.google-services'
