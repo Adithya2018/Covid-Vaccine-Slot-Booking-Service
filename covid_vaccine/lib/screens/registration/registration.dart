@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Registration extends StatelessWidget {
@@ -263,8 +264,11 @@ class CreateAccWithEmail extends StatefulWidget {
 
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final _formKey = GlobalKey<FormState>();
+
   String _email = "";
   String _pwd = "";
+  TextEditingController _pwdFieldController = new TextEditingController();
   String _confPwd = "";
 
   FocusNode _n1;
@@ -291,10 +295,10 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   Widget build(BuildContext context) {
     final emailField = Container(
       width: 600,
-      child: TextField(
+      child: TextFormField(
         focusNode: _n1,
         textInputAction: TextInputAction.next,
-        onSubmitted: (term) {
+        onFieldSubmitted: (term) {
           _n1.unfocus();
           FocusScope.of(context).requestFocus(_n2);
         },
@@ -311,15 +315,23 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (val) {
+          String s;
+          if (val.isEmpty) {
+            s = "Email cannot be empty";
+          }
+          return s;
+        },
       ),
     );
 
     final pwdField = Container(
       width: 600,
-      child: TextField(
+      child: TextFormField(
+        controller: _pwdFieldController,
         focusNode: _n2,
         textInputAction: TextInputAction.next,
-        onSubmitted: (term) {
+        onFieldSubmitted: (term) {
           _n2.unfocus();
           FocusScope.of(context).requestFocus(_n3);
         },
@@ -338,15 +350,25 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (val) {
+          String s;
+          if (val.isEmpty) {
+            s = "Password cannot be empty";
+          } else if (val.length < 8) {
+            s = "Password must be at least 8 characters long";
+          }
+          return s;
+        },
       ),
     );
 
     final confPwdField = Container(
       width: 600,
-      child: TextField(
+      child: TextFormField(
         focusNode: _n3,
         obscureText: true,
         style: style,
+        onFieldSubmitted: (val) {},
         onChanged: (val) {
           setState(() {
             _confPwd = val;
@@ -359,6 +381,17 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (val) {
+          String s;
+          if (val.isEmpty) {
+            s = "Password cannot be empty";
+          } else if (val.length < 8) {
+            s = "Password must be at least 8 characters long";
+          } else if (_pwd != _confPwd) {
+            s = "Passwords do not match";
+          }
+          return s;
+        },
       ),
     );
 
@@ -378,7 +411,9 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             print("Email: $_email");
             print("Password: $_pwd");
             print("Re-typed password: $_confPwd");
-            Navigator.of(context).pushNamed('/reg');
+            if (_formKey.currentState.validate()) {
+              Navigator.of(context).pushNamed('/reg');
+            }
           },
           child: Text(
             "Next",
@@ -473,15 +508,22 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
                       SizedBox(
                         height: 40,
                       ),
-                      emailField,
-                      SizedBox(
-                        height: 40,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            emailField,
+                            SizedBox(
+                              height: 40,
+                            ),
+                            pwdField,
+                            SizedBox(
+                              height: 40,
+                            ),
+                            confPwdField,
+                          ],
+                        ),
                       ),
-                      pwdField,
-                      SizedBox(
-                        height: 40,
-                      ),
-                      confPwdField,
                       SizedBox(
                         height: 40,
                       ),
