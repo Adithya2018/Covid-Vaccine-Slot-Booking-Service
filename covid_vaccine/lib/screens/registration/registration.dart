@@ -1,8 +1,4 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:covid_vaccine/screens/home/home.dart';
-import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:flutter/material.dart';
-import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 
 class Registration extends StatelessWidget {
   @override
@@ -37,67 +33,67 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //   });
   // }
 
-  /*void nextPage() {
-    setState(() {
-      _counter++;
-      print(_counter);
-    });
-  }*/
-
   @override
   Widget build(BuildContext context) {
-    // Scaffold is a layout for the major Material Components.
     final nameField = Container(
-        width: 800,
-        child: TextField(
-          obscureText: false,
-          style: style,
-          decoration: InputDecoration(
-              hoverColor: Colors.teal,
-              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              labelText: "Name",
-              //hintText: "Name",
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              )),
-        ));
+      width: 600, //800,
+      child: TextField(
+        obscureText: false,
+        style: style,
+        decoration: InputDecoration(
+          hoverColor: Colors.teal,
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Name",
+          //hintText: "Name",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
 
     final dobField = Container(
-        width: 800,
-        child: TextField(
-          obscureText: false,
-          style: style,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              labelText: "Date of Birth",
-              //hintText: "Mobile No/Email",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-        ));
+      width: 600, //800,
+      child: TextField(
+        obscureText: false,
+        style: style,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Date of Birth",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
 
     // TODO: Aadhaar no. verification after entering it
     final aadhaarField = Container(
-        width: 800,
-        child: TextField(
-          obscureText: false,
-          style: style,
-          decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-              labelText: "Aadhar Number",
-              //hintText: "Mobile No/Email",
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0))),
-        ));
+      width: 600, //800,
+      child: TextField(
+        obscureText: false,
+        style: style,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          labelText: "Aadhar Number",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+      ),
+    );
 
     final cancelButton = Container(
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(30.0),
-        color: Colors.red[900],
+        color: Colors.red[600],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          //onPressed: () {}, // here we need to add the functionality
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -105,21 +101,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
             "Cancel",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
     );
 
     final nextButton = Container(
+      //width: 20.0,
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(30.0),
-        color: Colors.green[700],
+        color: Colors.green[600],
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          //onPressed: () {}, // here we need to add the functionality
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
+          ),
           onPressed: () {
             Navigator.of(context).pushNamed(
               '/sb',
@@ -137,38 +138,48 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
 
+    final _buttonList = Container(
+      width: 600,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: cancelButton,
+          ),
+          Spacer(),
+          Expanded(
+            flex: 2,
+            child: nextButton,
+          ),
+        ],
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          elevation: 5.0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.blue,
-              size: 30.0,
+          elevation: 3.0,
+          backgroundColor: Colors.cyan[300],
+          title: Text(
+            'Registration', // Page',
+            style: style.copyWith(
+              color: Colors.grey[100],
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
             ),
-            tooltip: 'Navigation menu',
-            onPressed: null,
           ),
-          title: Text('Registration',
-              style: style.copyWith(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0,
-              )),
           actions: <Widget>[
-            IconButton(
+            /*IconButton(
               icon: Icon(
                 Icons.refresh,
-                color: Colors.blue,
+                color: Colors.white,
                 size: 30.0,
               ),
               tooltip: 'Refresh',
               onPressed: null,
-            ),
+            ),*/
           ],
         ),
       ),
@@ -178,47 +189,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
           /*child: Padding(
             padding: const EdgeInsets.all(1.0),*/
           child: Center(
-            /*width: 300,
-              padding: const EdgeInsets.all(36.0),*/
             child: Padding(
-              padding: const EdgeInsets.all(30.0),
+              padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 30.0),
               child: Container(
-                //width: 330,
+                width: 600,
                 child: Column(
                   /*verticalDirection: VerticalDirection.down,
                 crossAxisAlignment: CrossAxisAlignment.center,*/
                   //mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    /*CircularProfileAvatar(
-                         '"assets/profile.png"',
-                         borderColor: Colors.black12,
-                         backgroundColor: Colors.transparent,
-                         borderWidth: 1,
-                         elevation: 2,
-                         radius: 50,
-                         ),*/
-                    SizedBox(
-                      height: 150.0,
-                      child: Image.asset(
-                        "assets/profile.png",
-                        fit: BoxFit.contain,
-                        color: Colors.blue[600],
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromRGBO(0, 0, 0, 0.15),
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(50.0),
+                        ),
+                      ),
+                      child: CircleAvatar(
+                        child: Image(
+                          image: AssetImage('assets/profile.png'),
+                        ),
+                        radius: 50,
+                        backgroundColor: Colors.white,
                       ),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     // TODO: implement the redirect to camera app button
-                    // Icon(Icons.camera, size: 40.0),
-                    SizedBox(
-                      height: 25.0,
-                      child: Image.asset(
-                        "assets/camera.png",
-                        fit: BoxFit.contain,
+                    IconButton(
+                      alignment: Alignment.center,
+                      icon: Icon(
+                        Icons.camera_alt_rounded,
                       ),
+                      onPressed: () {},
                     ),
                     SizedBox(
                       height: 40,
@@ -235,30 +242,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(
                       height: 40,
                     ),
-                    Center(
-                      child: Row(
-                        children: [
-                          new Flexible(
-                            child: Container(
-                                child: cancelButton,
-                                alignment: Alignment.centerLeft),
-                            flex: 2,
-                          ),
-                          new Flexible(
-                            child: Container(
-                              alignment: Alignment.center,
-                            ),
-                            flex: 1,
-                          ),
-                          new Flexible(
-                            child: Container(
-                                child: nextButton,
-                                alignment: Alignment.centerRight),
-                            flex: 2,
-                          )
-                        ],
-                      ),
-                    ),
+                    _buttonList,
                   ],
                 ),
               ),
@@ -271,57 +255,58 @@ class _RegistrationPageState extends State<RegistrationPage> {
 }
 
 class CreateAccWithEmail extends StatefulWidget {
+  final Function toggleView;
+  CreateAccWithEmail({this.toggleView});
   @override
   _CreateAccWithEmailState createState() => _CreateAccWithEmailState();
 }
 
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  String email = "";
-  String pwd = "";
-  String confPwd = "";
+  String _email = "";
+  String _pwd = "";
+  String _confPwd = "";
 
-  FocusNode n1;
-  FocusNode n2;
-  FocusNode n3;
+  FocusNode _n1;
+  FocusNode _n2;
+  FocusNode _n3;
 
   @override
   void initState() {
     super.initState();
-    n1 = FocusNode();
-    n2 = FocusNode();
-    n3 = FocusNode();
+    _n1 = FocusNode();
+    _n2 = FocusNode();
+    _n3 = FocusNode();
   }
 
   @override
   void dispose() {
     super.dispose();
-    n1.dispose();
-    n2.dispose();
-    n3.dispose();
+    _n1.dispose();
+    _n2.dispose();
+    _n3.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final emailField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n1,
+        focusNode: _n1,
         textInputAction: TextInputAction.next,
         onSubmitted: (term) {
-          n1.unfocus();
-          FocusScope.of(context).requestFocus(n2);
+          _n1.unfocus();
+          FocusScope.of(context).requestFocus(_n2);
         },
         style: style,
         onChanged: (val) {
           setState(() {
-            email = val;
+            _email = val;
           });
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Email",
-          //hintText: "Email/Phone No.",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
@@ -330,19 +315,19 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
     );
 
     final pwdField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n2,
+        focusNode: _n2,
         textInputAction: TextInputAction.next,
         onSubmitted: (term) {
-          n2.unfocus();
-          FocusScope.of(context).requestFocus(n3);
+          _n2.unfocus();
+          FocusScope.of(context).requestFocus(_n3);
         },
         obscureText: true,
         style: style,
         onChanged: (val) {
           setState(() {
-            pwd = val;
+            _pwd = val;
           });
         },
         decoration: InputDecoration(
@@ -357,20 +342,19 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
     );
 
     final confPwdField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n3,
+        focusNode: _n3,
         obscureText: true,
         style: style,
         onChanged: (val) {
           setState(() {
-            confPwd = val;
+            _confPwd = val;
           });
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Re-type password",
-          //hintText: "Password",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
@@ -391,15 +375,18 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             borderRadius: new BorderRadius.circular(30.0),
           ),
           onPressed: () async {
-            print("Email: $email");
-            print("Password: $pwd");
-            print("Re-typed password: $confPwd");
+            print("Email: $_email");
+            print("Password: $_pwd");
+            print("Re-typed password: $_confPwd");
+            Navigator.of(context).pushNamed('/reg');
           },
           child: Text(
             "Next",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -432,39 +419,57 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.refresh,
+                Icons.login,
                 color: Colors.blue,
                 size: 30.0,
               ),
-              tooltip: 'Refresh',
-              onPressed: null,
+              tooltip: 'Sign-in options',
+              onPressed: () {
+                print("Sign In w/ Email");
+                widget.toggleView();
+              },
             ),
           ],
         ),
       ),
-      body: Center(
+      body: /**/ Center(
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.fromLTRB(30.0, 35.0, 30.0, 30.0),
                 child: Container(
-                  //width: 330,
+                  width: 600,
                   child: Column(
-                    /*verticalDirection: VerticalDirection.down,
-                    crossAxisAlignment: CrossAxisAlignment.center,*/
-                    //mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      /*SizedBox(
-                        height: 145,
-                      ),*/
-                      SizedBox(
-                        height: 160.0,
-                        child: Image.asset(
-                          "assets/logo.png",
-                          fit: BoxFit.contain,
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 500,
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 55 / 32,
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage('assets/app_logo.png'),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+                      /*Container(
+                        width: 260,
+                        height: 260,
+                        child: SizedBox(
+                          height: 360.0,
+                          child: Image.asset(
+                            "assets/app_logo.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),*/
                       SizedBox(
                         height: 40,
                       ),
