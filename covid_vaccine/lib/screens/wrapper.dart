@@ -25,6 +25,6 @@ class Wrapper extends StatelessWidget {
       print("$user was signed out");
       return SignInOptions();
     }*/ //Authenticate();
-    return CreateAccWithEmail();
+    return Authenticate();
   }
 }

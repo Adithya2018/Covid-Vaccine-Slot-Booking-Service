@@ -1,8 +1,4 @@
-//import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:covid_vaccine/screens/home/home.dart';
-import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:flutter/material.dart';
-import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 
 class Registration extends StatelessWidget {
   @override
@@ -36,13 +32,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //     _counter++;
   //   });
   // }
-
-  /*void nextPage() {
-    setState(() {
-      _counter++;
-      print(_counter);
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -266,51 +255,53 @@ class _RegistrationPageState extends State<RegistrationPage> {
 }
 
 class CreateAccWithEmail extends StatefulWidget {
+  final Function toggleView;
+  CreateAccWithEmail({this.toggleView});
   @override
   _CreateAccWithEmailState createState() => _CreateAccWithEmailState();
 }
 
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  String email = "";
-  String pwd = "";
-  String confPwd = "";
+  String _email = "";
+  String _pwd = "";
+  String _confPwd = "";
 
-  FocusNode n1;
-  FocusNode n2;
-  FocusNode n3;
+  FocusNode _n1;
+  FocusNode _n2;
+  FocusNode _n3;
 
   @override
   void initState() {
     super.initState();
-    n1 = FocusNode();
-    n2 = FocusNode();
-    n3 = FocusNode();
+    _n1 = FocusNode();
+    _n2 = FocusNode();
+    _n3 = FocusNode();
   }
 
   @override
   void dispose() {
     super.dispose();
-    n1.dispose();
-    n2.dispose();
-    n3.dispose();
+    _n1.dispose();
+    _n2.dispose();
+    _n3.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final emailField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n1,
+        focusNode: _n1,
         textInputAction: TextInputAction.next,
         onSubmitted: (term) {
-          n1.unfocus();
-          FocusScope.of(context).requestFocus(n2);
+          _n1.unfocus();
+          FocusScope.of(context).requestFocus(_n2);
         },
         style: style,
         onChanged: (val) {
           setState(() {
-            email = val;
+            _email = val;
           });
         },
         decoration: InputDecoration(
@@ -324,19 +315,19 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
     );
 
     final pwdField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n2,
+        focusNode: _n2,
         textInputAction: TextInputAction.next,
         onSubmitted: (term) {
-          n2.unfocus();
-          FocusScope.of(context).requestFocus(n3);
+          _n2.unfocus();
+          FocusScope.of(context).requestFocus(_n3);
         },
         obscureText: true,
         style: style,
         onChanged: (val) {
           setState(() {
-            pwd = val;
+            _pwd = val;
           });
         },
         decoration: InputDecoration(
@@ -351,14 +342,14 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
     );
 
     final confPwdField = Container(
-      width: 500,
+      width: 600,
       child: TextField(
-        focusNode: n3,
+        focusNode: _n3,
         obscureText: true,
         style: style,
         onChanged: (val) {
           setState(() {
-            confPwd = val;
+            _confPwd = val;
           });
         },
         decoration: InputDecoration(
@@ -384,16 +375,18 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             borderRadius: new BorderRadius.circular(30.0),
           ),
           onPressed: () async {
-            print("Email: $email");
-            print("Password: $pwd");
-            print("Re-typed password: $confPwd");
+            print("Email: $_email");
+            print("Password: $_pwd");
+            print("Re-typed password: $_confPwd");
             Navigator.of(context).pushNamed('/reg');
           },
           child: Text(
             "Next",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -426,32 +419,57 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
           actions: <Widget>[
             IconButton(
               icon: Icon(
-                Icons.refresh,
+                Icons.login,
                 color: Colors.blue,
                 size: 30.0,
               ),
-              tooltip: 'Refresh',
-              onPressed: null,
+              tooltip: 'Sign-in options',
+              onPressed: () {
+                print("Sign In w/ Email");
+                widget.toggleView();
+              },
             ),
           ],
         ),
       ),
-      body: Center(
+      body: /**/ Center(
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.fromLTRB(30.0, 35.0, 30.0, 30.0),
                 child: Container(
+                  width: 600,
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
-                        height: 160.0,
-                        child: Image.asset(
-                          "assets/logo.png",
-                          fit: BoxFit.contain,
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 500,
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 55 / 32,
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage('assets/app_logo.png'),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
+                      /*Container(
+                        width: 260,
+                        height: 260,
+                        child: SizedBox(
+                          height: 360.0,
+                          child: Image.asset(
+                            "assets/app_logo.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),*/
                       SizedBox(
                         height: 40,
                       ),

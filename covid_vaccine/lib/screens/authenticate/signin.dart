@@ -155,6 +155,8 @@ class Login extends StatelessWidget {
 }
 
 class SignInWithEmail extends StatefulWidget {
+  final Function toggleView;
+  SignInWithEmail({this.toggleView});
   @override
   _SignInWithEmailState createState() => _SignInWithEmailState();
 }
@@ -164,22 +166,40 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
   TextEditingController c1 = new TextEditingController();
   TextEditingController c2 = new TextEditingController();
 
-  void printPwd() {
-    print(c2.text);
-  }
+  FocusNode _n1;
+  FocusNode _n2;
+  FocusNode _n3;
 
   @override
   void initState() {
     super.initState();
-    c1.addListener(() => print(c1.text));
-    c2.addListener(() => print(c2.text));
+    c1.addListener(() => null);
+    c2.addListener(() => null);
+    _n1 = FocusNode();
+    _n2 = FocusNode();
+    _n3 = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _n1.dispose();
+    _n2.dispose();
+    _n3.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final emailPhNoField = Container(
-      width: 400,
+      width: 600,
       child: TextField(
+        focusNode: _n1,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (term) {
+          _n1.unfocus();
+          FocusScope.of(context).requestFocus(_n2);
+        },
+        onChanged: null,
         controller: c1,
         style: style,
         decoration: InputDecoration(
@@ -194,8 +214,15 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
     );
 
     final pwdField = Container(
-      width: 400,
+      width: 600,
       child: TextField(
+        focusNode: _n2,
+        textInputAction: TextInputAction.next,
+        onSubmitted: (term) {
+          _n2.unfocus();
+          FocusScope.of(context).requestFocus(_n3);
+        },
+        onChanged: null,
         obscureText: true,
         style: style,
         controller: c2,
@@ -215,14 +242,16 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
       child: Material(
         elevation: 5.0,
         borderRadius: BorderRadius.circular(30.0),
-        color: Colors.blue,
+        //color: Colors.blue,
+        color: Colors.cyan[300],
         child: MaterialButton(
+          focusNode: _n3,
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0),
           ),
-          onPressed: () async {
+          onPressed: () {
             print("Email: ${c1.text}");
             print("Password: ${c2.text}");
           },
@@ -230,7 +259,9 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
             "Sign in",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -238,29 +269,81 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 3.0,
+          backgroundColor: Colors.cyan[300],
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: () => print("Nav menu"),
+          ),
+          title: Text(
+            'Sign In', // Page',
+            style: style.copyWith(
+              color: Colors.grey[100],
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.person_add_alt_1,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'Register',
+              onPressed: () {
+                print('Create an account w/ Email');
+                widget.toggleView();
+              },
+            ),
+          ],
+        ),
+      ),
+      body: /**/ Center(
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(30.0),
+                padding: const EdgeInsets.fromLTRB(30.0, 35.0, 30.0, 30.0),
                 child: Container(
+                  width: 600,
                   //width: 330,
                   child: Column(
                     /*verticalDirection: VerticalDirection.down,
                     crossAxisAlignment: CrossAxisAlignment.center,*/
                     //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 500,
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 55 / 32,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage('assets/app_logo.png'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       /*SizedBox(
-                        height: 145,
-                      ),*/
-                      SizedBox(
                         height: 160.0,
                         child: Image.asset(
                           "assets/logo.png",
                           fit: BoxFit.contain,
                         ),
-                      ),
+                      ),*/
                       SizedBox(
                         height: 40,
                       ),
