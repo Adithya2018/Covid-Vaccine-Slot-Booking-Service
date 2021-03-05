@@ -14,7 +14,6 @@ class _AuthenticateState extends State<Authenticate> {
   void toggleView() {
     setState(() {
       showSignIn = !showSignIn;
-      print(showSignIn);
     });
   }
 
@@ -90,7 +89,7 @@ class _OTPPageState extends State<OTPPage> {
       child: Material(
         elevation: 3.0,
         borderRadius: BorderRadius.circular(30.0),
-        color: _verifyButtonColor[_colorListIndex], //Colors.cyan[400],
+        color: Color(0xFF29B6F6), //Colors.cyan[400],
 
         child: MaterialButton(
           key: _verifyButtonKey,

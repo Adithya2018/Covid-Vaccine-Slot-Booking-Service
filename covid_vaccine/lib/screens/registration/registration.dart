@@ -1,3 +1,4 @@
+import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -264,6 +265,8 @@ class CreateAccWithEmail extends StatefulWidget {
 
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final AuthService _auth = AuthService();
+  String error = "";
   final _formKey = GlobalKey<FormState>();
 
   String _email = "";
@@ -395,6 +398,38 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
       ),
     );
 
+    Future<void> _invalidOrAccExists() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Row(
+              children: [
+                Text("Error "),
+                Icon(
+                  Icons.warning,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+            content: Container(
+              child: Text(
+                "Used or invalid e-mail address",
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("Continue"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     final submitButton = Container(
       width: 200,
       child: Material(
@@ -412,7 +447,16 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             print("Password: $_pwd");
             print("Re-typed password: $_confPwd");
             if (_formKey.currentState.validate()) {
-              Navigator.of(context).pushNamed('/reg');
+              dynamic result = await _auth.registerWithEmailAndPwd(
+                _email,
+                _pwd,
+              );
+              if (result == null) {
+                await _invalidOrAccExists();
+              } else {
+                Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).pushNamed('/');
+              }
             }
           },
           child: Text(
@@ -530,6 +574,146 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
                       submitButton,
                     ],
                   ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ConfirmEmail extends StatefulWidget {
+  @override
+  _ConfirmEmailState createState() => _ConfirmEmailState();
+}
+
+class _ConfirmEmailState extends State<ConfirmEmail> {
+  TextStyle buttonStyle = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  Widget centerWidget = Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "Attention ",
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 30,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          Icon(
+            Icons.warning,
+            color: Colors.yellow[800],
+            size: 30,
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 10,
+      ),
+      Text(
+        "We have sent an email to your email address. Please read the email for further instructions.",
+        style: TextStyle(
+          fontFamily: 'Montserrat',
+          fontSize: 18,
+        ),
+        textAlign: TextAlign.center,
+      )
+    ],
+  );
+  void switchWidget() {
+    setState(
+      () {
+        centerWidget = Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Verified ",
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 30,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 30,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                "Tap to continue",
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 3.0,
+          backgroundColor: Colors.cyan[300],
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: () => print("Nav menu"),
+          ),
+          title: Text(
+            'Create account',
+            style: TextStyle(
+              color: Colors.grey[100],
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.normal,
+              fontSize: 23.0,
+            ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.navigate_next,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'continue',
+              onPressed: () {
+                switchWidget();
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Center(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(32.0, 0.0, 32.0, 0.0),
+                child: Container(
+                  width: 600,
+                  child: centerWidget,
                 ),
               ),
             ),
