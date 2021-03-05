@@ -122,7 +122,7 @@ class _SignInOptionsState extends State<SignInOptions> {
                         /**/SizedBox(
                           height: 150.0,
                           child: Image.asset(
-                            // "assets/logo.png",
+                            "assets/logo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -503,7 +503,7 @@ class _LoginPageState extends State<LoginPage> {
                         /**/ SizedBox(
                           height: 150.0,
                           child: Image.asset(
-                            // "assets/logo.png",
+                            "assets/logo.png",
                             fit: BoxFit.contain,
                           ),
                         ),
