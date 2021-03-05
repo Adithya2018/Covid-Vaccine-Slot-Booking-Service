@@ -1,3 +1,4 @@
+import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -264,6 +265,8 @@ class CreateAccWithEmail extends StatefulWidget {
 
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final AuthService _auth = AuthService();
+  String error = "";
   final _formKey = GlobalKey<FormState>();
 
   String _email = "";
@@ -395,6 +398,38 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
       ),
     );
 
+    Future<void> _invalidOrAccExists() async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Row(
+              children: [
+                Text("Error "),
+                Icon(
+                  Icons.warning,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+            content: Container(
+              child: Text(
+                "Used or invalid e-mail address",
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("Continue"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     final submitButton = Container(
       width: 200,
       child: Material(
@@ -412,7 +447,16 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             print("Password: $_pwd");
             print("Re-typed password: $_confPwd");
             if (_formKey.currentState.validate()) {
-              Navigator.of(context).pushNamed('/reg');
+              dynamic result = await _auth.registerWithEmailAndPwd(
+                _email,
+                _pwd,
+              );
+              if (result == null) {
+                await _invalidOrAccExists();
+              } else {
+                Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).pushNamed('/');
+              }
             }
           },
           child: Text(
