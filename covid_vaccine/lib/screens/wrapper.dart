@@ -1,5 +1,3 @@
-//import 'dart:js';
-
 import 'package:covid_vaccine/models/user.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 import 'package:covid_vaccine/screens/authenticate/signin.dart';
@@ -16,13 +14,13 @@ class Wrapper extends StatelessWidget {
     // return home or authenticate widget depending on the authentication state
     // i.e. whether the user has signed in (!=null) or signed out (=null)
 
-    /*if(user != null){
+    /**/if(user != null){
       print("${user.uid} is signed in");
       return Home();
     }else {
       print("$user was signed out");
       return SignInOptions();
-    }*/ //Authenticate();
+    } //Authenticate();
     return CreateAccWithEmail();
   }
 }
