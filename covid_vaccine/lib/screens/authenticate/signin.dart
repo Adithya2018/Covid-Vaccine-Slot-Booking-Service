@@ -173,8 +173,6 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
   @override
   void initState() {
     super.initState();
-    c1.addListener(() => null);
-    c2.addListener(() => null);
     _n1 = FocusNode();
     _n2 = FocusNode();
     _n3 = FocusNode();
