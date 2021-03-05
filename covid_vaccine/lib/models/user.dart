@@ -5,5 +5,7 @@ our result
 */
 class UserData {
   final String uid;
-  UserData({this.uid});
+  UserData({
+    this.uid,
+  });
 }
