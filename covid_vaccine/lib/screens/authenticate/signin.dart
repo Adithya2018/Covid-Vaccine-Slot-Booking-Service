@@ -30,10 +30,12 @@ class _SignInOptionsState extends State<SignInOptions> {
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final signInAnonButton = Container(
@@ -318,7 +320,7 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                 await _credentialErrMsg(msg: result.message);
               } else {
                 print(result);
-                /**/Navigator.of(context).popUntil((route) => false);
+                /**/ Navigator.of(context).popUntil((route) => false);
                 Navigator.of(context).pushNamed('/');
               }
             }
@@ -376,8 +378,10 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
         ),
       ),
       body: /**/ Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width,
+          minHeight: MediaQuery.of(context).size.height,
+        ),
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Center(
