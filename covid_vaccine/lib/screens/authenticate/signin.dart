@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:covid_vaccine/models/user.dart';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,7 +90,6 @@ class _SignInOptionsState extends State<SignInOptions> {
         child: MaterialButton(
           minWidth: MediaQuery.of(context).size.width,
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          //onPressed: () {}, // here we need to add the functionality
           onPressed: null,
           child: Text(
             "email/mobile no.",
@@ -119,7 +116,7 @@ class _SignInOptionsState extends State<SignInOptions> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        /**/SizedBox(
+                        /**/ SizedBox(
                           height: 150.0,
                           child: Image.asset(
                             "assets/app_logo.png",
@@ -163,8 +160,10 @@ class SignInWithEmail extends StatefulWidget {
 
 class _SignInWithEmailState extends State<SignInWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  TextEditingController c1 = new TextEditingController();
-  TextEditingController c2 = new TextEditingController();
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String _email = "";
+  String _pwd = "";
 
   FocusNode _n1;
   FocusNode _n2;
@@ -190,15 +189,18 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
   Widget build(BuildContext context) {
     final emailPhNoField = Container(
       width: 600,
-      child: TextField(
+      child: TextFormField(
         focusNode: _n1,
         textInputAction: TextInputAction.next,
-        onSubmitted: (term) {
+        onFieldSubmitted: (term) {
           _n1.unfocus();
           FocusScope.of(context).requestFocus(_n2);
         },
-        onChanged: null,
-        controller: c1,
+        onChanged: (val) {
+          setState(() {
+            _email = val;
+          });
+        },
         style: style,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
@@ -208,22 +210,32 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (val) {
+          String s;
+          if (val.isEmpty) {
+            s = "Email cannot be empty";
+          }
+          return s;
+        },
       ),
     );
 
     final pwdField = Container(
       width: 600,
-      child: TextField(
+      child: TextFormField(
         focusNode: _n2,
         textInputAction: TextInputAction.next,
-        onSubmitted: (term) {
+        onFieldSubmitted: (term) {
           _n2.unfocus();
           FocusScope.of(context).requestFocus(_n3);
         },
-        onChanged: null,
+        onChanged: (val) {
+          setState(() {
+            _pwd = val;
+          });
+        },
         obscureText: true,
         style: style,
-        controller: c2,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Password",
@@ -232,8 +244,49 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
+        validator: (val) {
+          String s;
+          if (val.isEmpty) {
+            s = "Password cannot be empty";
+          }
+          return s;
+        },
       ),
     );
+
+    // name was _invalidOrAccExists
+    Future<void> _credentialErrMsg({String msg}) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Error "),
+                Icon(
+                  Icons.warning,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+            content: Container(
+              child: Text(
+                msg,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("Continue"),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     final signInButton = Container(
       width: 200,
@@ -249,9 +302,18 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
           shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0),
           ),
-          onPressed: () {
-            print("Email: ${c1.text}");
-            print("Password: ${c2.text}");
+          onPressed: () async {
+            if (_formKey.currentState.validate()) {
+              print("valid");
+              dynamic result = await _auth.signInWithEmailAndPwd(_email, _pwd);
+              if (result.runtimeType == FirebaseAuthException) {
+                await _credentialErrMsg(msg: result.message);
+              } else {
+                print(result);
+                /**/Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).pushNamed('/');
+              }
+            }
           },
           child: Text(
             "Sign in",
@@ -335,21 +397,28 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                           ),
                         ),
                       ),
-                      /**/ SizedBox(
+                      /* SizedBox(
                         height: 160.0,
                         child: Image.asset(
                           "assets/app_logo.png",
                           fit: BoxFit.contain,
                         ),
-                      ),
+                      ),*/
                       SizedBox(
                         height: 40,
                       ),
-                      emailPhNoField,
-                      SizedBox(
-                        height: 40,
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            emailPhNoField,
+                            SizedBox(
+                              height: 40,
+                            ),
+                            pwdField,
+                          ],
+                        ),
                       ),
-                      pwdField,
                       SizedBox(
                         height: 40,
                       ),
@@ -387,7 +456,9 @@ class _LoginPageState extends State<LoginPage> {
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           labelText: "Mobile No/Email",
           //hintText: "Mobile No/Email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0),),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(32.0),
+          ),
         ),
       ),
     );

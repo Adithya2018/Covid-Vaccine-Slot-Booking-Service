@@ -1,5 +1,4 @@
 import 'package:covid_vaccine/screens/home/home.dart';
-import 'package:covid_vaccine/screens/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 

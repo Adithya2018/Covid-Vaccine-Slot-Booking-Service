@@ -28,7 +28,7 @@ class RegistrationPage extends StatefulWidget {
 class _RegistrationPageState extends State<RegistrationPage> {
   // int _counter = 0;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  static const IconData camera = IconData(0xe62e, fontFamily: 'MaterialIcons');
+  // static const IconData camera = IconData(0xe62e, fontFamily: 'MaterialIcons');
   // void _incrementCounter() {
   //   setState(() {
   //     _counter++;
@@ -266,7 +266,7 @@ class CreateAccWithEmail extends StatefulWidget {
 class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final AuthService _auth = AuthService();
-  String error = "";
+  //String error = "";
   final _formKey = GlobalKey<FormState>();
 
   String _email = "";
@@ -447,7 +447,7 @@ class _CreateAccWithEmailState extends State<CreateAccWithEmail> {
             print("Password: $_pwd");
             print("Re-typed password: $_confPwd");
             if (_formKey.currentState.validate()) {
-              dynamic result = await _auth.registerWithEmailAndPwd(
+              dynamic result = await _auth.reqNewAccountWithEmail(
                 _email,
                 _pwd,
               );

@@ -1,8 +1,5 @@
 import 'dart:ui';
 import 'package:covid_vaccine/models/user.dart';
-import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
-import 'package:covid_vaccine/screens/authenticate/signin.dart';
-import 'package:covid_vaccine/screens/home/home.dart';
 import 'package:covid_vaccine/screens/registration/registration.dart';
 import 'package:covid_vaccine/screens/registration/slotbooking.dart';
 import 'package:covid_vaccine/screens/wrapper.dart' show Wrapper;
