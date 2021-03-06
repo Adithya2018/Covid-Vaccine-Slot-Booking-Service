@@ -41,7 +41,7 @@ class AuthService {
       return userFromDB(user);
     } on FirebaseAuthException catch (e) {
       print(e.message);
-      print("Credential error!!!");
+      print("Error!!!");
       return e;
     }
   }
