@@ -1,5 +1,6 @@
 import 'package:covid_vaccine/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/services.dart';
 
 /*
 * sign-in and sign-out service
@@ -28,14 +29,29 @@ class AuthService {
   }
 
   // email and password sign-in
+  Future signInWithEmailAndPwd(String email, String pwd) async {
+    UserCredential result;
+    try {
+      result = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: pwd,
+      );
+      User user = result.user;
+      print(user);
+      return userFromDB(user);
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      print("Credential error!!!");
+      return e;
+    }
+  }
 
   // register with email and password
-  Future registerWithEmailAndPwd(String email, String pwd) async {
+  Future reqNewAccountWithEmail(String email, String pwd) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: pwd,
-
       );
       User user = result.user;
       return userFromDB(user);
