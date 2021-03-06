@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
 import 'package:covid_vaccine/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -25,21 +22,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  //int _counter = 0;
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final AuthService _auth = AuthService();
   final _scrollController = ScrollController();
 
-  void _incrementCounter() {
+  /*void _incrementCounter() {
     setState(() {
       _counter++;
-    });
-  }
-
-  /*void nextPage() {
-    setState(() {
-      _counter++;
-      print(_counter);
     });
   }*/
 
@@ -300,7 +290,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           actions: <Widget>[
-            IconButton(
+            /*IconButton(
               icon: Icon(
                 Icons.add,
                 color: Colors.white,
@@ -310,10 +300,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).pushNamed('/reg');
               },
-            ),
+            ),*/
             IconButton(
               icon: Icon(
-                Icons.refresh,
+                Icons.more_vert,
                 color: Colors.white,
                 size: 30.0,
               ),
@@ -333,14 +323,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   SizedBox(
                     height: 10,
-                  ),
-                  /*addBtn,
-                  SizedBox(
-                    height: 20,
-                  ),*/
+                  ),/**/
                   _buttonList,
+                  addBtn,
                   SizedBox(
-                    height: 45,
+                    height: 65,
                   ),
                 ],
               ),
