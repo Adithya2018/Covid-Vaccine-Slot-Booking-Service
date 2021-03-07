@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Image(
                           image: AssetImage('assets/profile.png'),
                         ),
-                        radius: 35,
+                        radius: 35.0,
                         backgroundColor: Colors.white,
                       ),
                     ),
