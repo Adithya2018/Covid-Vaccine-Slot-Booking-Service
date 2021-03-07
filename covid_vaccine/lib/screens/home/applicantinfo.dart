@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ViewMember extends StatefulWidget {
-  ViewMember({Key key, this.title}) : super(key: key);
+class ViewApplicantInfo extends StatefulWidget {
+  ViewApplicantInfo({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _ViewMemberState createState() => _ViewMemberState();
+  _ViewApplicantInfoState createState() => _ViewApplicantInfoState();
 }
 
-class _ViewMemberState extends State<ViewMember> {
+class _ViewApplicantInfoState extends State<ViewApplicantInfo> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   @override
@@ -21,9 +21,9 @@ class _ViewMemberState extends State<ViewMember> {
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(

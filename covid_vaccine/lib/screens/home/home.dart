@@ -26,7 +26,15 @@ class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final AuthService _auth = AuthService();
   final _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+  }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
   /*void _incrementCounter() {
     setState(() {
       _counter++;
@@ -63,7 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => OTPPage()),
+              MaterialPageRoute(
+                builder: (context) => OTPPage(),
+              ),
             );
           },
           child: Column(
@@ -313,23 +323,30 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      body: Scrollbar(
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),/**/
-                  _buttonList,
-                  addBtn,
-                  SizedBox(
-                    height: 65,
-                  ),
-                ],
+      body: Container(
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width,
+          minHeight: MediaQuery.of(context).size.height,
+        ),
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            child: Container(
+              width: 600,
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _buttonList,
+                    addBtn,
+                    SizedBox(
+                      height: 70,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
