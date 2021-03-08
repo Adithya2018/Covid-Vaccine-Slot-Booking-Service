@@ -39,7 +39,7 @@ dependencies:
   #keyboard_visibility: ^0.5.6
   #flutter_keyboard_visibility: ^4.0.3
   otp_text_field: ^1.0.2
-  flutter_barcode_scanner: ^1.0.2
+  qr_code_scanner: ^0.3.5
   # extras (above)
 
 dev_dependencies:

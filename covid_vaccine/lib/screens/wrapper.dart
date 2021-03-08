@@ -20,6 +20,6 @@ class Wrapper extends StatelessWidget {
       print("$user was signed out");
       return Authenticate();
     }*/
-    return ApplicantIdentification();
+    return QRCodeScanResult();
   }
 }
