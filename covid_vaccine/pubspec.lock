@@ -329,21 +329,21 @@ packages:
       name: syncfusion_flutter_calendar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.4.46"
+    version: "18.4.47"
   syncfusion_flutter_core:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.4.46"
+    version: "18.4.47"
   syncfusion_flutter_datepicker:
     dependency: transitive
     description:
       name: syncfusion_flutter_datepicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "18.4.46-beta"
+    version: "18.4.47-beta"
   table_calendar:
     dependency: "direct main"
     description:

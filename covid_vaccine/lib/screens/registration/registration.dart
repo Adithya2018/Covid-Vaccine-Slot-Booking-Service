@@ -1,4 +1,5 @@
 //import 'dart:html';
+import 'package:xml/xml.dart';
 import 'dart:io' show Platform;
 import 'dart:math';
 import 'package:covid_vaccine/services/auth.dart';
@@ -736,16 +737,15 @@ class QRCodeScanResult extends StatefulWidget {
 }
 
 class _QRCodeScanResultState extends State<QRCodeScanResult> {
-  Barcode result;
+  //String result = "";
   String scanData = "Tap anywhere to Scan QR Code";
-  void toggleView(Barcode result) {
+  void toggleView(String result) {
     setState(() {
-      scanData = result.code;
-      this.result = result;
+      scanData = result;
+      //this.result = result;
     });
     print("${result.runtimeType}");
     Navigator.of(context).pop();
-    //fn();
   }
 
   @override
@@ -1031,21 +1031,33 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       this.controller = controller;
       this.controller?.resumeCamera()?.whenComplete(() {
         cameraActive = true;
-      })?.catchError((e){
+      })?.catchError((e) {
         cameraActive = true;
         print(e.toString());
       });
       this.controller?.getFlashStatus()?.then((val) {
         flashOn = val;
-      })?.catchError((e){
+      })?.catchError((e) {
         flashOn = false;
         print(e.toString());
       });
     });
-    controller.scannedDataStream.listen((val) async {
-      await controller?.stopCamera()?.whenComplete(() {
-        widget.toggleView(val);
-      })?.catchError((e) => print(e.toString()));
+    controller.scannedDataStream.listen((scanResult) {
+      try {
+        final document = XmlDocument.parse(scanResult.code);
+        print("${document.toString()} sdvndn");
+        final titles = document.rootElement.attributes;
+        String result = "";
+        for(XmlAttribute t in titles){
+          result += "${t.name.toString()}: ${t.value}\n";
+        }
+        controller?.stopCamera()?.whenComplete(() {
+          widget.toggleView(result);
+        })?.catchError((e) => print(e.toString()));
+      } on XmlParserException catch (e) {
+        print("${e.toString()} nvdsk");
+        print(e.message);
+      }
     });
   }
 }
