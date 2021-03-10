@@ -1,5 +1,7 @@
 //import 'dart:html';
+import 'package:xml/xml.dart';
 import 'dart:io' show Platform;
+import 'dart:math';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -735,16 +737,15 @@ class QRCodeScanResult extends StatefulWidget {
 }
 
 class _QRCodeScanResultState extends State<QRCodeScanResult> {
-  Barcode result;
+  //String result = "";
   String scanData = "Tap anywhere to Scan QR Code";
-  void toggleView(Barcode result) {
+  void toggleView(String result) {
     setState(() {
-      scanData = result.code;
-      this.result = result;
+      scanData = result;
+      //this.result = result;
     });
     print("${result.runtimeType}");
     Navigator.of(context).pop();
-    //fn();
   }
 
   @override
@@ -851,10 +852,11 @@ class QRCodeScanner extends StatefulWidget {
 }
 
 class _QRCodeScannerState extends State<QRCodeScanner> {
-  bool cameraActive = true;
-
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool cameraActive = true;
+  bool flashOn = false;
+
   void toggleCameraState() {
     setState(
       () {
@@ -891,11 +893,9 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     super.dispose();
   }
 
-  Color toggleFlashBtnColor = Colors.black;
-  bool flashOn = false;
-
-  Future<CameraFacing> isFlashOn() async {
-    return await controller?.getCameraInfo();//getFlashStatus()?.then((val) => flashOn = val)?.onError((error, stackTrace) => null);
+  Future<bool> isFlashOn() async {
+    return await controller
+        ?.getFlashStatus(); //getFlashStatus()?.then((val) => flashOn = val)?.onError((error, stackTrace) => null);
   }
 
   @override
@@ -923,7 +923,11 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                           children: [
                             IconButton(
                               iconSize: 45,
-                              splashColor: Colors.white,
+                              highlightColor: Colors.transparent,
+                              splashColor: flashOn
+                                  ? Colors.transparent
+                                  : Colors.yellow[200], //Color(0xFFFFF176),
+                              splashRadius: MediaQuery.of(context).size.width,
                               onPressed: () async {
                                 await controller?.toggleFlash()?.whenComplete(
                                   () {
@@ -935,9 +939,8 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                               },
                               icon: Icon(
                                 Icons.flash_on,
-                                color: flashOn
-                                    ? Color(0xFFFFF176)
-                                    : Colors.black,
+                                color:
+                                    flashOn ? Colors.yellow[200] : Colors.black,
                               ),
                             ),
                             FutureBuilder(
@@ -958,13 +961,19 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                         iconSize: 75,
                         onPressed: () async {
                           if (cameraActive) {
-                            await controller
-                                ?.pauseCamera()
-                                ?.whenComplete(() => toggleCameraState());
+                            await controller?.pauseCamera()?.whenComplete(() {
+                              setState(() {
+                                cameraActive = false;
+                              });
+                            });
                           } else {
                             await controller?.resumeCamera()?.whenComplete(
-                                  () => toggleCameraState(),
-                                );
+                              () {
+                                setState(() {
+                                  cameraActive = true;
+                                });
+                              },
+                            );
                           }
                         },
                         icon: cameraActive
@@ -1020,11 +1029,35 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   void _onQRViewCreated(QRViewController controller) {
     setState(() {
       this.controller = controller;
-    });
-    controller.scannedDataStream.listen((val) async {
-      await controller?.stopCamera()?.whenComplete(() {
-        widget.toggleView(val);
+      this.controller?.resumeCamera()?.whenComplete(() {
+        cameraActive = true;
+      })?.catchError((e) {
+        cameraActive = true;
+        print(e.toString());
       });
+      this.controller?.getFlashStatus()?.then((val) {
+        flashOn = val;
+      })?.catchError((e) {
+        flashOn = false;
+        print(e.toString());
+      });
+    });
+    controller.scannedDataStream.listen((scanResult) {
+      try {
+        final document = XmlDocument.parse(scanResult.code);
+        print("${document.toString()} sdvndn");
+        final titles = document.rootElement.attributes;
+        String result = "";
+        for(XmlAttribute t in titles){
+          result += "${t.name.toString()}: ${t.value}\n";
+        }
+        controller?.stopCamera()?.whenComplete(() {
+          widget.toggleView(result);
+        })?.catchError((e) => print(e.toString()));
+      } on XmlParserException catch (e) {
+        print("${e.toString()} nvdsk");
+        print(e.message);
+      }
     });
   }
 }
