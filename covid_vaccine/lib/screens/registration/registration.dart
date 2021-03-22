@@ -1,6 +1,13 @@
+//import 'dart:html';
+import 'package:xml/xml.dart';
+import 'dart:io' show Platform;
+import 'dart:math';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class Registration extends StatelessWidget {
   @override
@@ -721,5 +728,336 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
         ),
       ),
     );
+  }
+}
+
+class QRCodeScanResult extends StatefulWidget {
+  @override
+  _QRCodeScanResultState createState() => _QRCodeScanResultState();
+}
+
+class _QRCodeScanResultState extends State<QRCodeScanResult> {
+  //String result = "";
+  String scanData = "Tap anywhere to Scan QR Code";
+  void toggleView(String result) {
+    setState(() {
+      scanData = result;
+      //this.result = result;
+    });
+    print("${result.runtimeType}");
+    Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          elevation: 3.0,
+          backgroundColor: Colors.cyan[300],
+          leading: IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.blue,
+              size: 30.0,
+            ),
+            tooltip: 'Navigation menu',
+            onPressed: () => print("Nav menu"),
+          ),
+          title: Text(
+            'Applicant ID',
+            style: TextStyle(
+              color: Colors.grey[100],
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.normal,
+              fontSize: 23.0,
+            ),
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.navigate_next,
+                color: Colors.blue,
+                size: 30.0,
+              ),
+              tooltip: 'continue',
+              onPressed: () {
+                print("continue");
+              },
+            ),
+          ],
+        ),
+      ),
+      body: MaterialButton(
+        highlightColor: Colors.transparent,
+        splashColor: Color.fromRGBO(0, 0, 0, 0.025),
+        height: 30,
+        onPressed: () {
+          print("tap");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => QRCodeScanner(
+                toggleView: toggleView,
+              ),
+            ),
+          );
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              /**/ Icon(
+                Icons.qr_code_sharp,
+                size: 75,
+                color: Colors.black,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                scanData,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class QRCodeScanner extends StatefulWidget {
+  final Function toggleView;
+  QRCodeScanner({this.toggleView});
+
+  @override
+  State<StatefulWidget> createState() => _QRCodeScannerState();
+}
+
+class _QRCodeScannerState extends State<QRCodeScanner> {
+  QRViewController controller;
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  bool cameraActive = true;
+  bool flashOn = false;
+
+  void toggleCameraState() {
+    setState(
+      () {
+        cameraActive = !cameraActive;
+      },
+    );
+  }
+
+  // In order to get hot reload to work we need to pause the camera if the platform
+  // is android, or resume the camera if the platform is iOS.
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller?.pauseCamera();
+    }
+    controller?.resumeCamera();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void deactivate() {
+    print("Closing the scanner...");
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  Future<bool> isFlashOn() async {
+    return await controller
+        ?.getFlashStatus(); //getFlashStatus()?.then((val) => flashOn = val)?.onError((error, stackTrace) => null);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 5,
+            child: _buildQrView(context),
+          ),
+          Expanded(
+            flex: 1,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: Column(
+                          children: [
+                            IconButton(
+                              iconSize: 45,
+                              highlightColor: Colors.transparent,
+                              splashColor: flashOn
+                                  ? Colors.transparent
+                                  : Colors.yellow[200], //Color(0xFFFFF176),
+                              splashRadius: MediaQuery.of(context).size.width,
+                              onPressed: () async {
+                                await controller?.toggleFlash()?.whenComplete(
+                                  () {
+                                    setState(() {
+                                      flashOn = !flashOn;
+                                    });
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                Icons.flash_on,
+                                color:
+                                    flashOn ? Colors.yellow[200] : Colors.black,
+                              ),
+                            ),
+                            FutureBuilder(
+                              future: controller?.getFlashStatus(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    '${snapshot.data ? "ON" : "OFF"}',
+                                  );
+                                }
+                                return Text('N/A');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      IconButton(
+                        iconSize: 75,
+                        onPressed: () async {
+                          if (cameraActive) {
+                            await controller?.pauseCamera()?.whenComplete(() {
+                              setState(() {
+                                cameraActive = false;
+                              });
+                            });
+                          } else {
+                            await controller?.resumeCamera()?.whenComplete(
+                              () {
+                                setState(() {
+                                  cameraActive = true;
+                                });
+                              },
+                            );
+                          }
+                        },
+                        icon: cameraActive
+                            ? Icon(Icons.pause_circle_outline)
+                            : Icon(
+                                Icons.play_circle_outline,
+                                color: Colors.green[600],
+                              ),
+                      ),
+                      IconButton(
+                        iconSize: 45,
+                        color: Colors.red[600],
+                        onPressed: () async {
+                          await controller?.stopCamera()?.whenComplete(
+                            () {
+                              print("Stopped camera...");
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                        icon: Icon(Icons.stop_circle_outlined),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQrView(BuildContext context) {
+    // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
+    Size s = MediaQuery.of(context).size;
+    var scanArea = (s.width < 400 || s.height < 400) ? 170.0 : 300.0;
+    // To ensure the Scanner view is properly sizes after rotation
+    // we need to listen for Flutter SizeChanged notification and update controller
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: Colors.greenAccent[400],
+        borderRadius: 7,
+        borderLength: 40,
+        borderWidth: 7,
+        cutOutSize: scanArea,
+      ),
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+      this.controller?.resumeCamera()?.whenComplete(() {
+        cameraActive = true;
+      })?.catchError((e) {
+        cameraActive = true;
+        print(e.toString());
+      });
+      this.controller?.getFlashStatus()?.then((val) {
+        flashOn = val;
+      })?.catchError((e) {
+        flashOn = false;
+        print(e.toString());
+      });
+    });
+    controller.scannedDataStream.listen((scanResult) {
+      try {
+        final document = XmlDocument.parse(scanResult.code);
+        print("${document.toString()} sdvndn");
+        final titles = document.rootElement.attributes;
+        String result = "";
+        for(XmlAttribute t in titles){
+          result += "${t.name.toString()}: ${t.value}\n";
+        }
+        controller?.stopCamera()?.whenComplete(() {
+          widget.toggleView(result);
+        })?.catchError((e) => print(e.toString()));
+      } on XmlParserException catch (e) {
+        print("${e.toString()} nvdsk");
+        print(e.message);
+      }
+    });
   }
 }

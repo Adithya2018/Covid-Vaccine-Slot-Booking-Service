@@ -27,6 +27,16 @@ class _SignInOptionsState extends State<SignInOptions> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final AuthService _auth = AuthService();
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final signInAnonButton = Container(
       child: Material(
@@ -310,7 +320,7 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
                 await _credentialErrMsg(msg: result.message);
               } else {
                 print(result);
-                /**/Navigator.of(context).popUntil((route) => false);
+                /**/ Navigator.of(context).popUntil((route) => false);
                 Navigator.of(context).pushNamed('/');
               }
             }
@@ -367,7 +377,11 @@ class _SignInWithEmailState extends State<SignInWithEmail> {
           ],
         ),
       ),
-      body: /**/ Center(
+      body: /**/ Container(
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.of(context).size.width,
+          minHeight: MediaQuery.of(context).size.height,
+        ),
         child: Scrollbar(
           child: SingleChildScrollView(
             child: Center(
