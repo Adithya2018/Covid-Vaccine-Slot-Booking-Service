@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
@@ -170,16 +172,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             size: 14,
                             color: Colors.green,
                           ),
-                          /*Text(
-                            " registered",
-                            textAlign: TextAlign.left,
-                            style: style.copyWith(
-                              color: Colors.green,
-                              fontWeight: FontWeight.normal,
-                              fontFamily: 'Monospace',
-                              fontSize: 14.0,
-                            ),
-                          ),*/
                         ],
                       ),
                     ],
@@ -216,7 +208,8 @@ class _MyHomePageState extends State<MyHomePage> {
             borderRadius: new BorderRadius.circular(10.0),
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed('/reg');
+            Navigator.of(context).pushNamed('/rqr');
+            //Navigator.of(context).pushNamed('/reg');
           },
           child: Center(
             child: Container(
@@ -233,11 +226,74 @@ class _MyHomePageState extends State<MyHomePage> {
       children: List<Widget>.generate(
         10,
         (index) => Column(
-          children: [listItem, SizedBox(height: 20)],
+          children: <Widget>[
+            listItem,
+            SizedBox(
+              height: 20,
+            ),
+          ],
         ),
       ),
     );
+
+    List<Widget> actionButtonOptions = <Widget>[
+      FloatingActionButton(
+        onPressed: () {
+          print("add");
+        },
+        child: Icon(Icons.add),
+      ),
+      FloatingActionButton(
+        onPressed: () {
+          print("arrow_upward");
+        },
+        child: Icon(Icons.arrow_upward),
+      ),
+      FloatingActionButton(
+        onPressed: () {
+          print("arrow_downward");
+        },
+        child: Icon(Icons.arrow_downward),
+      ),
+    ];
+
+    final actionButton = FloatingActionButton(
+      //elevation: 3.0,
+      //backgroundColor: Colors.cyan[300],
+      //tooltip: 'Go to top',
+      child: Icon(Icons.arrow_upward_rounded),
+      onPressed: () {
+        _scrollController.animateTo(
+          _scrollController.position.minScrollExtent,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.fastOutSlowIn,
+        );
+
+        print("options button");
+      },
+    );
+
+    /// Will used to access the Animated list
+    final GlobalKey<AnimatedListState> _optionsKey = new GlobalKey<AnimatedListState>();
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
+    double prev = 0.0;
+    bool optionsVisible = false;
+    Widget slideIt(
+      BuildContext context,
+      int index,
+      Animation<double> animation,
+    ) {
+      FloatingActionButton item = actionButtonOptions[index];
+      prev = index.toDouble();
+
+      return SlideTransition(
+        position: Tween<Offset>(
+          begin: Offset(0, optionsVisible?0:-(3-prev)*0.4),
+          end: Offset(0, optionsVisible?-(3-prev)*0.4:(-prev)*0.4),
+        ).animate(animation),
+        child: item,
+      );
+    }
 
     return Scaffold(
       key: _scaffoldKey,
@@ -250,7 +306,10 @@ class _MyHomePageState extends State<MyHomePage> {
             DrawerHeader(
               child: Text(
                 '(Anonymous)',
-                style: TextStyle(fontFamily: 'Monospace', fontSize: 25),
+                style: TextStyle(
+                  fontFamily: 'Monospace',
+                  fontSize: 25,
+                ),
               ),
               decoration: BoxDecoration(
                 color: Colors.cyan[300],
@@ -313,12 +372,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),*/
             IconButton(
               icon: Icon(
-                Icons.more_vert,
+                Icons.refresh,
                 color: Colors.white,
                 size: 30.0,
               ),
               tooltip: 'Refresh',
-              onPressed: null,
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).pushNamed('/');
+              },
             ),
           ],
         ),
@@ -352,19 +414,59 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 3.0,
-        backgroundColor: Colors.cyan[300],
-        tooltip: 'Go to top', // used by assistive technologies
-        child: Icon(Icons.arrow_upward_rounded),
-        onPressed: () => _scrollController.animateTo(
-          _scrollController.position.minScrollExtent,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.fastOutSlowIn,
-        ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          Container(
+            width: 58,
+            child: AnimatedList(
+              key: _optionsKey,
+              shrinkWrap: true,
+              itemBuilder: (context, index, animation) {
+                return slideIt(context, index, animation);
+              },
+            ),
+          ),
+          FloatingActionButton(
+            //elevation: 3.0,
+            backgroundColor: Colors.cyan[300],
+            //tooltip: 'Go to top',
+            child: Icon(Icons.arrow_upward_rounded),
+            onPressed: () {
+              /*_scrollController.animateTo(
+                _scrollController.position.minScrollExtent,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.fastOutSlowIn,
+              );*/
+              if (!optionsVisible) {
+                int count = actionButtonOptions.length;
+                while (0 < count--) {
+                  _optionsKey.currentState.insertItem(
+                    0,
+                    duration: Duration(milliseconds: 100*(3-count)),
+                  );
+                }
+                optionsVisible = true;
+              } else {
+                int count = actionButtonOptions.length;
+                while (0 < count--) {
+                  _optionsKey.currentState.removeItem(
+                    count,
+                    (_, animation) => slideIt(context, 0, animation),
+                    duration: Duration(milliseconds: 100*count*count),
+                  );
+                }
+                optionsVisible = false;
+              }
+              print("options button");
+            },
+          ),
+        ],
       ),
     );
   }
+
   /*Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

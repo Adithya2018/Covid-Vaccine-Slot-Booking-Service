@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
               routes: <String, WidgetBuilder>{
                 '/reg': (BuildContext context) => Registration(),
                 '/sb': (BuildContext context) => Slotbooking(),
+                '/rqr': (BuildContext context) => QRCodeScanResult(),
                 '/sqr': (BuildContext context) => QRCodeScanner(),
               },
             ),

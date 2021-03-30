@@ -43,6 +43,10 @@ class AuthService {
       print(e.message);
       print("Error!!!");
       return e;
+    } on Exception catch (e){
+      print("Unknown error occurred");
+      print(e.toString());
+      return e;
     }
   }
 
