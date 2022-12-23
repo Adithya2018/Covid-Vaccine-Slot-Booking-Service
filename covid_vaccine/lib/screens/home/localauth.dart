@@ -26,11 +26,10 @@ class _LocalAuthState extends State<LocalAuth> {
   Future<bool> checkUser() async {
     bool canAuthenticate;
     try {
-      /**/ canAuthenticate = await localAuth.authenticateWithBiometrics(
+      /**/ canAuthenticate = await localAuth.authenticate(
         localizedReason: 'Use fingerprint to unlock',
         //biometricOnly: true,
       );
-
     } on PlatformException catch (e) {
       print("an exception occurred");
       print(e);
