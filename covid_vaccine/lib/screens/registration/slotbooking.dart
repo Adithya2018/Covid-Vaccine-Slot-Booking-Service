@@ -26,59 +26,44 @@ class _SlotbookingPageState extends State<SlotbookingPage> {
   @override
   Widget build(BuildContext context) {
     final cancelButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.red[900],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          //Navigator.of(context).pop();
-          Navigator.of(context).popUntil(ModalRoute.withName('/'));
-        },
-        child: Text("Cancel",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.red[900],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            //Navigator.of(context).pop();
+            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+          },
+          child: Text("Cancel",
+              textAlign: TextAlign.center,
+              style: style.copyWith(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
+        ),
       ),
-    ));
+    );
 
     final confirmButton = Container(
-        child: Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Colors.green[700],
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        //onPressed: () {}, // here we need to add the functionality
-        onPressed: () {
-          /*
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Home()),
-          );*/
-          Navigator.of(context).popUntil(ModalRoute.withName('/'));
-        },
-        child: Text("Confirm",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+      child: Material(
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.green[700],
+        child: MaterialButton(
+          minWidth: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          onPressed: () {
+            Navigator.of(context).popUntil(ModalRoute.withName('/'));
+          },
+          child: Text("Confirm",
+              textAlign: TextAlign.center,
+              style: style.copyWith(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
+        ),
       ),
-    ));
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    );
     return Scaffold(
-      /*appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text("OTP Page"),
-      ),*/
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:covid_vaccine/screens/authenticate/authenticate.dart';
@@ -14,6 +12,7 @@ class Home extends StatelessWidget {
   }
 }
 
+/// Home page widget
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -25,7 +24,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   //int _counter = 0;
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20.0,
+  );
   final AuthService _auth = AuthService();
   final _scrollController = ScrollController();
   @override
@@ -274,7 +276,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     /// Will used to access the Animated list
-    final GlobalKey<AnimatedListState> _optionsKey = new GlobalKey<AnimatedListState>();
+    final GlobalKey<AnimatedListState> _optionsKey =
+        new GlobalKey<AnimatedListState>();
     final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey();
     double prev = 0.0;
     bool optionsVisible = false;
@@ -288,8 +291,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
       return SlideTransition(
         position: Tween<Offset>(
-          begin: Offset(0, optionsVisible?0:-(3-prev)*0.4),
-          end: Offset(0, optionsVisible?-(3-prev)*0.4:(-prev)*0.4),
+          begin: Offset(0, optionsVisible ? 0 : -(3 - prev) * 0.4),
+          end: Offset(0, optionsVisible ? -(3 - prev) * 0.4 : (-prev) * 0.4),
         ).animate(animation),
         child: item,
       );
@@ -337,7 +340,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: Size.fromHeight(60.0),
         child: AppBar(
           elevation: 3.0,
           backgroundColor: Colors.cyan[300],
@@ -372,14 +375,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),*/
             IconButton(
               icon: Icon(
-                Icons.refresh,
+                Icons.watch,
                 color: Colors.white,
                 size: 30.0,
               ),
               tooltip: 'Refresh',
               onPressed: () {
-                Navigator.of(context).popUntil((route) => false);
-                Navigator.of(context).pushNamed('/');
+                //Navigator.of(context).popUntil((route) => false);
+                Navigator.of(context).pushNamed('/wgt');
               },
             ),
           ],
@@ -444,7 +447,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 while (0 < count--) {
                   _optionsKey.currentState.insertItem(
                     0,
-                    duration: Duration(milliseconds: 100*(3-count)),
+                    duration: Duration(milliseconds: 100 * (3 - count)),
                   );
                 }
                 optionsVisible = true;
@@ -454,7 +457,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   _optionsKey.currentState.removeItem(
                     count,
                     (_, animation) => slideIt(context, 0, animation),
-                    duration: Duration(milliseconds: 100*count*count),
+                    duration: Duration(milliseconds: 100 * count * count),
                   );
                 }
                 optionsVisible = false;

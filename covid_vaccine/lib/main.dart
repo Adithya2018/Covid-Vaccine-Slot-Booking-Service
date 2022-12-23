@@ -20,6 +20,8 @@ import 'package:flutter/material.dart'
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+import 'database/remote_db/test.dart';
+
 /*import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';*/
 
@@ -111,6 +113,7 @@ class MyApp extends StatelessWidget {
                 '/sb': (BuildContext context) => Slotbooking(),
                 '/rqr': (BuildContext context) => QRCodeScanResult(),
                 '/sqr': (BuildContext context) => QRCodeScanner(),
+                '/wgt': (BuildContext context) => GetFromWeb(),
               },
             ),
           );

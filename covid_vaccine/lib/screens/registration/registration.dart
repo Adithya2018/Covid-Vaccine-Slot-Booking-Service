@@ -1,7 +1,7 @@
-//import 'dart:html';
+import 'dart:async';
+
 import 'package:xml/xml.dart';
 import 'dart:io' show Platform;
-import 'dart:math';
 import 'package:covid_vaccine/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -868,12 +868,14 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
   @override
-  void reassemble() {
+  void reassemble() async {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller?.pauseCamera();
+      await controller?.pauseCamera()?.whenComplete(() async {
+        print("susojvsod");
+        await controller?.resumeCamera();
+      });
     }
-    controller?.resumeCamera();
   }
 
   @override
@@ -883,14 +885,14 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
 
   @override
   void deactivate() {
-    print("Closing the scanner...");
     super.deactivate();
   }
 
   @override
-  void dispose() {
+  void dispose() async{
     controller?.dispose();
     super.dispose();
+    await streamSubscription.cancel();
   }
 
   Future<bool> isFlashOn() async {
@@ -987,12 +989,21 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
                         iconSize: 45,
                         color: Colors.red[600],
                         onPressed: () async {
-                          await controller?.stopCamera()?.whenComplete(
-                            () {
-                              print("Stopped camera...");
-                              Navigator.of(context).pop();
+                          /*await controller?.stopCamera()?.whenComplete(
+                            () async {
+                              print("dlfkbfgo");
+                              await streamSubscription
+                                  .cancel()
+                                  .whenComplete(() {
+                                print("Stopped camera...");
+                                Navigator.of(context).pop();
+                              });
                             },
-                          );
+                          );*/
+                          await streamSubscription.cancel().whenComplete(() {
+                            print("Stopped camera...");
+                            Navigator.of(context).pop();
+                          });
                         },
                         icon: Icon(Icons.stop_circle_outlined),
                       ),
@@ -1006,6 +1017,8 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
       ),
     );
   }
+
+  StreamSubscription<Barcode> streamSubscription;
 
   Widget _buildQrView(BuildContext context) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
@@ -1042,21 +1055,26 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
         print(e.toString());
       });
     });
-    controller.scannedDataStream.listen((scanResult) {
+    streamSubscription =
+        controller.scannedDataStream.listen((scanResult) async {
       try {
         final document = XmlDocument.parse(scanResult.code);
         print("${document.toString()} sdvndn");
         final titles = document.rootElement.attributes;
         String result = "";
-        for(XmlAttribute t in titles){
+        for (XmlAttribute t in titles) {
           result += "${t.name.toString()}: ${t.value}\n";
         }
-        controller?.stopCamera()?.whenComplete(() {
-          widget.toggleView(result);
+        await controller?.stopCamera()?.whenComplete(() async {
+          await streamSubscription.cancel().whenComplete(() {
+            widget.toggleView(result);
+          });
+          //widget.toggleView(result);
         })?.catchError((e) => print(e.toString()));
       } on XmlParserException catch (e) {
-        print("${e.toString()} nvdsk");
         print(e.message);
+      } catch (e) {
+        print("unknown error: ${e.toString()}");
       }
     });
   }

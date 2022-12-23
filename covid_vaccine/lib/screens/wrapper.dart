@@ -5,6 +5,8 @@ import 'package:covid_vaccine/screens/registration/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'home/localauth.dart';
+
 // this is the root ('/') widget
 class Wrapper extends StatelessWidget {
   @override
@@ -20,6 +22,6 @@ class Wrapper extends StatelessWidget {
       print("$user was signed out");
       return Authenticate();
     }
-    return QRCodeScanResult();
+    return LocalAuth();
   }
 }

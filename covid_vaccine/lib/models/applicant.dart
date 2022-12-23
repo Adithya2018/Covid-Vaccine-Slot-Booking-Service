@@ -1,0 +1,3 @@
+class Applicant {
+  String name;
+}
